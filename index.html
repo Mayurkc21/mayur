@@ -8,7 +8,7 @@
   <meta name="author" content="Mayur Chhoriya" />
   <meta name="google-site-verification" content="6mkz4weGEWZug-OVoR0KVTC4HdgPWSWBgE6GyKEUi-U" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet" />
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:#fff; color:#1a1a1a; font-family:Georgia,"Times New Roman",serif; font-size:18px; line-height:1.8; }
@@ -16,8 +16,8 @@
 
     /* ── Header ── */
     .site-header { max-width:860px; margin:0 auto; padding:3rem 2rem 0.5rem; }
-    .site-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:600; font-size:clamp(3rem,9vw,5.5rem); line-height:1.02; letter-spacing:0.01em; display:block; cursor:pointer; color:#1a1a1a; }
-    .site-title em { font-style:italic; font-weight:600; }
+    .site-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:500; font-size:clamp(3rem,9vw,5.5rem); line-height:1.02; letter-spacing:0.01em; display:block; cursor:pointer; color:#E34234; visibility:hidden; }
+    .site-title em { font-style:italic; font-weight:500; }
     .site-tagline { font-size:0.85rem; color:#bbb; margin-top:0.4rem; letter-spacing:0.1em; text-transform:uppercase; }
 
     /* ── Nav ── */
@@ -149,36 +149,33 @@
       inset: 0;
       z-index: 9999;
       background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      opacity: 1;
-      transition: opacity 0.7s ease;
+      pointer-events: none;
     }
-    #intro-overlay.fade-out { opacity: 0; pointer-events: none; }
+    /* the background fades out, the name div does not */
+    #intro-overlay.bg-fade {
+      transition: background 1s ease;
+      background: rgba(255,255,255,0);
+    }
     #intro-overlay.gone { display: none; }
+
     #intro-name {
+      position: fixed;
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-weight: 600;
+      font-weight: 500;
       font-size: clamp(3rem, 9vw, 5.5rem);
       line-height: 1.02;
       letter-spacing: 0.01em;
       color: #1a1a1a;
       white-space: nowrap;
-      position: relative;
+      /* starts centered — JS will set left/top to center it, then animate to header pos */
     }
-    #intro-name em { font-style: italic; font-weight: 600; }
-    .ichar { opacity: 0; display: inline-block; }
-    .ispace { display: inline-block; width: 0.28em; }
-
-    /* hide the real title until overlay is gone — seamless swap */
-    .site-title { visibility: hidden; }
-    .site-title.visible { visibility: visible; }
+    #intro-name em { font-style: italic; font-weight: 500; }
+    .ic { opacity: 0; display: inline-block; }
+    .is { display: inline-block; width: 0.28em; }
   </style>
 </head>
 <body>
 
-<!-- INTRO OVERLAY -->
 <div id="intro-overlay">
   <div id="intro-name"></div>
 </div>
@@ -486,126 +483,110 @@
 <footer>&copy; 2025 Mayur Chhoriya</footer>
 
 <noscript>Please enable JavaScript.</noscript>
-<script type="text/javascript">
-(function() {
+<script>
+(function () {
 
-  /* ─── Navigation ─── */
+  /* ── Navigation ── */
   var secs = ['home','musings','fun','fun-reading','fun-listening','fun-writings','fun-ftv','fun-ftv-bcs','fun-curious'];
-
   function showSection(id) {
-    for (var i = 0; i < secs.length; i++) {
-      var el = document.getElementById(secs[i]);
-      if (el) el.classList.remove('active');
-    }
-    var navLinks = document.querySelectorAll('.site-nav li a');
-    for (var j = 0; j < navLinks.length; j++) navLinks[j].classList.remove('active');
-    var target = document.getElementById(id);
-    if (target) target.classList.add('active');
-    var navHome    = document.getElementById('nav-home');
-    var navMusings = document.getElementById('nav-musings');
-    var navFun     = document.getElementById('nav-fun');
-    if      (id === 'home'             && navHome)    navHome.classList.add('active');
-    else if (id === 'musings'          && navMusings) navMusings.classList.add('active');
-    else if (id.indexOf('fun') === 0   && navFun)     navFun.classList.add('active');
-    window.scrollTo(0, 0);
+    secs.forEach(function(s){ var e=document.getElementById(s); if(e) e.classList.remove('active'); });
+    document.querySelectorAll('.site-nav li a').forEach(function(a){ a.classList.remove('active'); });
+    var t = document.getElementById(id); if(t) t.classList.add('active');
+    if(id==='home')               { var e=document.getElementById('nav-home');    if(e) e.classList.add('active'); }
+    else if(id==='musings')       { var e=document.getElementById('nav-musings'); if(e) e.classList.add('active'); }
+    else if(id.indexOf('fun')===0){ var e=document.getElementById('nav-fun');     if(e) e.classList.add('active'); }
+    window.scrollTo(0,0);
   }
   window.showSection = showSection;
 
-  /* ─── Contact form ─── */
+  /* ── Contact form ── */
   var form = document.getElementById('contact-form');
   if (form) {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
-      var data = new FormData(form);
-      fetch('https://formspree.io/f/mojnykbk', { method:'POST', body:data, headers:{'Accept':'application/json'} })
-        .then(function(r) {
-          if (r.ok) { form.reset(); var m = document.getElementById('form-success'); if(m) m.style.display='block'; }
-        });
+      fetch('https://formspree.io/f/mojnykbk', { method:'POST', body:new FormData(form), headers:{'Accept':'application/json'} })
+        .then(function(r){ if(r.ok){ form.reset(); var m=document.getElementById('form-success'); if(m) m.style.display='block'; } });
     });
   }
 
-  /* ─── Intro animation ─── */
-  var overlay   = document.getElementById('intro-overlay');
-  var introName = document.getElementById('intro-name');
-  var siteTitle = document.querySelector('.site-title');
+  /* ── Intro animation ── */
+  var VERMILLION = '#E34234';
+  var overlay    = document.getElementById('intro-overlay');
+  var introName  = document.getElementById('intro-name');
+  var siteTitle  = document.querySelector('.site-title');
 
-  // Build char spans
-  var parts = [
-    { str: 'Mayur',    italic: false },
-    { str: ' ',        italic: false },
-    { str: 'Chhoriya', italic: true  }
-  ];
-  var allSpans = [];
-  parts.forEach(function(part) {
-    var wrap = part.italic ? document.createElement('em') : null;
-    var target = wrap || introName;
-    for (var i = 0; i < part.str.length; i++) {
-      if (part.str[i] === ' ') {
-        var sp = document.createElement('span');
-        sp.className = 'ispace';
-        target.appendChild(sp);
+  /* Build letter spans — identical markup to .site-title */
+  var chars = [];
+  function addChars(str, italic) {
+    var wrap = italic ? document.createElement('em') : null;
+    var dest = wrap || introName;
+    for (var i = 0; i < str.length; i++) {
+      if (str[i] === ' ') {
+        var sp = document.createElement('span'); sp.className = 'is'; dest.appendChild(sp);
       } else {
-        var s = document.createElement('span');
-        s.className = 'ichar';
-        s.textContent = part.str[i];
-        allSpans.push(s);
-        target.appendChild(s);
+        var s = document.createElement('span'); s.className = 'ic'; s.textContent = str[i];
+        chars.push(s); dest.appendChild(s);
       }
     }
     if (wrap) introName.appendChild(wrap);
+  }
+  addChars('Mayur', false);
+  addChars(' ',     false);
+  addChars('Chhoriya', true);
+
+  /* Position #intro-name centered on screen to start */
+  function centerIntroName() {
+    var iw = introName.offsetWidth, ih = introName.offsetHeight;
+    introName.style.left = Math.round((window.innerWidth  - iw) / 2) + 'px';
+    introName.style.top  = Math.round((window.innerHeight - ih) / 2) + 'px';
+  }
+  centerIntroName();
+
+  var n = chars.length, step = 75;
+
+  /* Phase 1 — letters appear */
+  chars.forEach(function(c, i) {
+    setTimeout(function(){ c.style.opacity = '1'; }, 300 + i * step);
   });
 
-  var total  = allSpans.length;
-  var stepMs = 75;
-
-  // Phase 1: reveal letters
-  allSpans.forEach(function(s, idx) {
-    setTimeout(function() {
-      s.style.transition = 'opacity 0.12s ease';
-      s.style.opacity = '1';
-    }, 300 + idx * stepMs);
-  });
-
-  // Phase 2: turn red
-  var t2 = 300 + total * stepMs + 300;
+  /* Phase 2 — turn vermillion */
+  var t2 = 300 + n * step + 300;
   setTimeout(function() {
-    introName.style.transition = 'color 0.8s ease';
-    introName.style.color = '#c0392b';
+    introName.style.transition = 'color 0.7s ease';
+    introName.style.color = VERMILLION;
   }, t2);
 
-  // Phase 3: slide to exact header position
-  var t3 = t2 + 1000;
+  /* Phase 3 — slide to EXACT position of .site-title */
+  var t3 = t2 + 900;
   setTimeout(function() {
-    // Measure where the real title sits (it's visibility:hidden so still occupies space)
-    var tRect = siteTitle.getBoundingClientRect();
-    var iRect = introName.getBoundingClientRect();
-
-    var dx = tRect.left - iRect.left;
-    var dy = tRect.top  - iRect.top;
-    // Scale based on font size ratio
-    var iFS = parseFloat(window.getComputedStyle(introName).fontSize);
-    var tFS = parseFloat(window.getComputedStyle(siteTitle).fontSize);
-    var scale = tFS / iFS;
-
-    introName.style.transition = 'transform 0.85s cubic-bezier(0.65,0,0.35,1)';
-    introName.style.transformOrigin = 'left top';
-    introName.style.transform = 'translate(' + dx + 'px,' + dy + 'px) scale(' + scale + ')';
+    /* .site-title is visibility:hidden so it still has layout position */
+    var tr = siteTitle.getBoundingClientRect();
+    /* introName is position:fixed so its left/top are already viewport coords */
+    introName.style.transition = 'left 0.85s cubic-bezier(0.76,0,0.24,1), top 0.85s cubic-bezier(0.76,0,0.24,1)';
+    introName.style.left = Math.round(tr.left) + 'px';
+    introName.style.top  = Math.round(tr.top)  + 'px';
   }, t3);
 
-  // Phase 4: at the exact moment slide finishes — swap intro for real title, fade overlay
+  /* Phase 4 — slide done: make real title visible (same color, same spot),
+     fade the white background away, reveal page */
   var t4 = t3 + 900;
   setTimeout(function() {
-    // Show real title in red (invisible under the overlay at same position)
-    siteTitle.style.color = '#c0392b';
-    siteTitle.classList.add('visible');
+    /* Show real title — it's sitting exactly under intro-name now */
+    siteTitle.style.color = VERMILLION;
+    siteTitle.style.visibility = 'visible';
 
-    // Now fade the overlay — real title is exactly underneath, seamless
-    overlay.classList.add('fade-out');
+    /* Hide intro-name instantly — real title is underneath at same pos */
+    introName.style.display = 'none';
 
-    // Init site content
+    /* Fade white background to transparent, revealing the page */
+    overlay.style.transition = 'background-color 0.9s ease';
+    overlay.style.backgroundColor = 'rgba(255,255,255,0)';
+
+    /* Show page content */
     showSection('home');
 
-    setTimeout(function() { overlay.classList.add('gone'); }, 750);
+    /* Remove overlay entirely after fade */
+    setTimeout(function() { overlay.classList.add('gone'); }, 950);
   }, t4);
 
 })();
