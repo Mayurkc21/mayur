@@ -55,6 +55,9 @@
       width: 100%;
       display: block;
       mix-blend-mode: multiply;
+      opacity: 0.85;           /* Makes it slightly transparent */
+      filter: brightness(1.2) contrast(0.8);  /* Lightens and softens */
+
       /* No multiply or filter — pure transparent PNG on beige */
     }
     .home-hero-text {
@@ -812,81 +815,93 @@
     });
   }
 
-  /* Intro animation — smooth, no blink */
-  var overlay   = document.getElementById('intro-overlay');
-  var introName = document.getElementById('intro-name');
-  var siteTitle = document.querySelector('.site-title');
-
-  var chars = [];
-  function addChars(str, italic) {
-    var wrap = italic ? document.createElement('em') : null;
-    var dest = wrap || introName;
-    for (var i = 0; i < str.length; i++) {
-      if (str[i] === ' ') {
-        var sp = document.createElement('span'); sp.className = 'is'; dest.appendChild(sp);
-      } else {
-        var s = document.createElement('span'); s.className = 'ic'; s.textContent = str[i];
-        chars.push(s); dest.appendChild(s);
-      }
-    }
-    if (wrap) introName.appendChild(wrap);
-  }
-  addChars('Mayur', false);
-  addChars(' ',     false);
-  addChars('Chhoriya', true);
-
-  function centerIntroName() {
-    var iw = introName.offsetWidth, ih = introName.offsetHeight;
-    introName.style.left = Math.round((window.innerWidth  - iw) / 2) + 'px';
-    introName.style.top  = Math.round((window.innerHeight - ih) / 2) + 'px';
-  }
-  centerIntroName();
-
-  var n = chars.length, step = 75;
-  chars.forEach(function(c, i) {
-    setTimeout(function(){ c.style.opacity = '1'; }, 300 + i * step);
-  });
-
-  var t2 = 300 + n * step + 300;
-  setTimeout(function() {
-    introName.style.transition = 'color 0.7s ease';
-    introName.style.color = HARVARD_CRIMSON;
-  }, t2);
-
-  var t3 = t2 + 900;
-  setTimeout(function() {
-    var tr = siteTitle.getBoundingClientRect();
-    introName.style.transition = 'left 0.85s cubic-bezier(0.76,0,0.24,1), top 0.85s cubic-bezier(0.76,0,0.24,1)';
-    introName.style.left = Math.round(tr.left) + 'px';
-    introName.style.top  = Math.round(tr.top)  + 'px';
-  }, t3);
-
-  var t4 = t3 + 900;
-  setTimeout(function() {
-    // Hide intro name, show real title, and ensure home section is visible BEFORE overlay fades
-    siteTitle.style.color = HARVARD_CRIMSON;
-    siteTitle.style.visibility = 'visible';
-    introName.style.display = 'none';
-
-    // Home is already active, but we ensure its opacity and animation are neutral (no flicker)
+  // ===== FIXED INTRO ANIMATION - NO BLINK =====
+  window.addEventListener('load', function() {
+    var overlay = document.getElementById('intro-overlay');
+    var introName = document.getElementById('intro-name');
+    var siteTitle = document.querySelector('.site-title');
+    
+    // Make sure home section is ready but hidden under overlay
     var homeEl = document.getElementById('home');
     if (homeEl) {
-      homeEl.style.cssText += '; animation:none !important; opacity:1 !important; transform:none !important;';
+      homeEl.style.opacity = '1';
+      homeEl.style.visibility = 'visible';
+      homeEl.style.display = 'block';
     }
 
-    // Fade overlay away; after it's completely gone, unlock styles
-    overlay.style.transition = 'opacity 1.8s cubic-bezier(0.4,0,0.2,1)';
-    overlay.style.opacity = '0';
-    setTimeout(function() {
-      overlay.style.visibility = 'hidden';
-      if (homeEl) {
-        homeEl.style.cssText = homeEl.style.cssText
-          .replace(/animation[^;]*;?\s*/gi,'')
-          .replace(/opacity[^;]*;?\s*/gi,'')
-          .replace(/transform[^;]*;?\s*/gi,'');
+    var chars = [];
+    function addChars(str, italic) {
+      var wrap = italic ? document.createElement('em') : null;
+      var dest = wrap || introName;
+      for (var i = 0; i < str.length; i++) {
+        if (str[i] === ' ') {
+          var sp = document.createElement('span'); sp.className = 'is'; dest.appendChild(sp);
+        } else {
+          var s = document.createElement('span'); s.className = 'ic'; s.textContent = str[i];
+          chars.push(s); dest.appendChild(s);
+        }
       }
-    }, 1900);
-  }, t4);
+      if (wrap) introName.appendChild(wrap);
+    }
+    
+    // Clear any existing content
+    introName.innerHTML = '';
+    addChars('Mayur', false);
+    addChars(' ', false);
+    addChars('Chhoriya', true);
+
+    function centerIntroName() {
+      var iw = introName.offsetWidth, ih = introName.offsetHeight;
+      introName.style.left = Math.round((window.innerWidth - iw) / 2) + 'px';
+      introName.style.top = Math.round((window.innerHeight - ih) / 2) + 'px';
+    }
+    centerIntroName();
+    window.addEventListener('resize', centerIntroName);
+
+    var n = chars.length, step = 75;
+    chars.forEach(function(c, i) {
+      setTimeout(function(){ c.style.opacity = '1'; }, 300 + i * step);
+    });
+
+    var t2 = 300 + n * step + 300;
+    setTimeout(function() {
+      introName.style.transition = 'color 0.7s ease';
+      introName.style.color = HARVARD_CRIMSON;
+    }, t2);
+
+    var t3 = t2 + 900;
+    setTimeout(function() {
+      var tr = siteTitle.getBoundingClientRect();
+      introName.style.transition = 'left 0.85s cubic-bezier(0.76,0,0.24,1), top 0.85s cubic-bezier(0.76,0,0.24,1), opacity 0.85s ease';
+      introName.style.left = Math.round(tr.left) + 'px';
+      introName.style.top = Math.round(tr.top) + 'px';
+    }, t3);
+
+    var t4 = t3 + 900;
+    setTimeout(function() {
+      // Fade out intro name first
+      introName.style.transition = 'opacity 0.5s ease';
+      introName.style.opacity = '0';
+      
+      setTimeout(function() {
+        // Show real title
+        siteTitle.style.color = HARVARD_CRIMSON;
+        siteTitle.style.visibility = 'visible';
+        
+        // Fade out overlay
+        overlay.style.transition = 'opacity 1.2s ease';
+        overlay.style.opacity = '0';
+        
+        setTimeout(function() {
+          overlay.style.visibility = 'hidden';
+          // Clean up home element styles
+          if (homeEl) {
+            homeEl.style.cssText = '';
+          }
+        }, 1300);
+      }, 500);
+    }, t4);
+  });
 })();
 </script>
 </body>
