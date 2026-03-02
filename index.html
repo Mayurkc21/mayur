@@ -877,30 +877,44 @@
       introName.style.top = Math.round(tr.top) + 'px';
     }, t3);
 
-    var t4 = t3 + 900;
-    setTimeout(function() {
-      // Fade out intro name first
-      introName.style.transition = 'opacity 0.5s ease';
-      introName.style.opacity = '0';
-      
-      setTimeout(function() {
-        // Show real title
-        siteTitle.style.color = HARVARD_CRIMSON;
-        siteTitle.style.visibility = 'visible';
-        
-        // Fade out overlay
-        overlay.style.transition = 'opacity 1.2s ease';
-        overlay.style.opacity = '0';
-        
+      var t4 = t3 + 900;
+  setTimeout(function() {
+    /* 1. Swap: real header title in, animated intro-name out */
+    siteTitle.style.color = HARVARD_CRIMSON;
+    siteTitle.style.visibility = 'visible';
+    introName.style.display = 'none';
+
+    /* 2. Show the home section while overlay is still fully opaque white */
+    showSection('home');
+
+    /* 3. Lock section at full opacity under the opaque overlay */
+    var homeEl = document.getElementById('home');
+    if (homeEl) {
+      homeEl.style.cssText += '; animation:none !important; opacity:1 !important; transform:none !important;';
+    }
+
+    /* 4. Two rAFs ensure the browser has fully painted everything.
+          Then fade the overlay smoothly. Only restore section styles
+          AFTER the overlay is completely gone — no flash possible. */
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
         setTimeout(function() {
-          overlay.style.visibility = 'hidden';
-          // Clean up home element styles
-          if (homeEl) {
-            homeEl.style.cssText = '';
-          }
-        }, 1300);
-      }, 500);
-    }, t4);
+          overlay.style.transition = 'opacity 1.8s cubic-bezier(0.4,0,0.2,1)';
+          overlay.style.opacity = '0';
+          setTimeout(function() {
+            overlay.style.visibility = 'hidden';
+            /* Now safe to unlock the section */
+            if (homeEl) {
+              homeEl.style.cssText = homeEl.style.cssText
+                .replace(/animation[^;]*;?\s*/gi,'')
+                .replace(/opacity[^;]*;?\s*/gi,'')
+                .replace(/transform[^;]*;?\s*/gi,'');
+            }
+          }, 1900);
+        }, 100);
+      });
+    });
+  }, t4);
   });
 })();
 </script>
