@@ -815,108 +815,93 @@
     });
   }
 
-  // ===== FIXED INTRO ANIMATION - NO BLINK =====
-  window.addEventListener('load', function() {
-    var overlay = document.getElementById('intro-overlay');
-    var introName = document.getElementById('intro-name');
-    var siteTitle = document.querySelector('.site-title');
-    
-    // Make sure home section is ready but hidden under overlay
-    var homeEl = document.getElementById('home');
-    if (homeEl) {
-      homeEl.style.opacity = '1';
-      homeEl.style.visibility = 'visible';
-      homeEl.style.display = 'block';
-    }
+  /* Intro animation - restored to working version */
+  var overlay   = document.getElementById('intro-overlay');
+  var introName = document.getElementById('intro-name');
+  var siteTitle = document.querySelector('.site-title');
 
-    var chars = [];
-    function addChars(str, italic) {
-      var wrap = italic ? document.createElement('em') : null;
-      var dest = wrap || introName;
-      for (var i = 0; i < str.length; i++) {
-        if (str[i] === ' ') {
-          var sp = document.createElement('span'); sp.className = 'is'; dest.appendChild(sp);
-        } else {
-          var s = document.createElement('span'); s.className = 'ic'; s.textContent = str[i];
-          chars.push(s); dest.appendChild(s);
-        }
+  var chars = [];
+  function addChars(str, italic) {
+    var wrap = italic ? document.createElement('em') : null;
+    var dest = wrap || introName;
+    for (var i = 0; i < str.length; i++) {
+      if (str[i] === ' ') {
+        var sp = document.createElement('span'); sp.className = 'is'; dest.appendChild(sp);
+      } else {
+        var s = document.createElement('span'); s.className = 'ic'; s.textContent = str[i];
+        chars.push(s); dest.appendChild(s);
       }
-      if (wrap) introName.appendChild(wrap);
     }
-    
-    // Clear any existing content
-    introName.innerHTML = '';
-    addChars('Mayur', false);
-    addChars(' ', false);
-    addChars('Chhoriya', true);
-
-    function centerIntroName() {
-      var iw = introName.offsetWidth, ih = introName.offsetHeight;
-      introName.style.left = Math.round((window.innerWidth - iw) / 2) + 'px';
-      introName.style.top = Math.round((window.innerHeight - ih) / 2) + 'px';
-    }
-    centerIntroName();
-    window.addEventListener('resize', centerIntroName);
-
-    var n = chars.length, step = 75;
-    chars.forEach(function(c, i) {
-      setTimeout(function(){ c.style.opacity = '1'; }, 300 + i * step);
-    });
-
-    var t2 = 300 + n * step + 300;
-    setTimeout(function() {
-      introName.style.transition = 'color 0.7s ease';
-      introName.style.color = HARVARD_CRIMSON;
-    }, t2);
-
-    var t3 = t2 + 900;
-    setTimeout(function() {
-      var tr = siteTitle.getBoundingClientRect();
-      introName.style.transition = 'left 0.85s cubic-bezier(0.76,0,0.24,1), top 0.85s cubic-bezier(0.76,0,0.24,1), opacity 0.85s ease';
-      introName.style.left = Math.round(tr.left) + 'px';
-      introName.style.top = Math.round(tr.top) + 'px';
-    }, t3);
-
-     var t4 = t3 + 900;
-setTimeout(function() {
-  // --- STEP 1: Prepare for the transition ---
-  // Make the real site title visible and colored, but keep it hidden under the overlay
-  siteTitle.style.color = HARVARD_CRIMSON;
-  siteTitle.style.visibility = 'visible';
-
-  // Ensure the home section is active and visible, but hidden under the overlay.
-  // We do NOT call showSection('home') here because it causes a repaint/reflow.
-  // Instead, we just ensure it has the 'active' class.
-  var homeEl = document.getElementById('home');
-  if (homeEl && !homeEl.classList.contains('active')) {
-    homeEl.classList.add('active');
+    if (wrap) introName.appendChild(wrap);
   }
-  // Also ensure the correct nav link is active
-  var navHome = document.getElementById('nav-home');
-  if (navHome && !navHome.classList.contains('active')) {
-      navHome.classList.add('active');
+  addChars('Mayur', false);
+  addChars(' ',     false);
+  addChars('Chhoriya', true);
+
+  function centerIntroName() {
+    var iw = introName.offsetWidth, ih = introName.offsetHeight;
+    introName.style.left = Math.round((window.innerWidth  - iw) / 2) + 'px';
+    introName.style.top  = Math.round((window.innerHeight - ih) / 2) + 'px';
   }
+  centerIntroName();
 
-  // --- STEP 2: Fade out the intro name, then fade out the overlay ---
-  // First, fade out the introName
-  introName.style.transition = 'opacity 0.5s ease';
-  introName.style.opacity = '0';
+  var n = chars.length, step = 75;
+  chars.forEach(function(c, i) {
+    setTimeout(function(){ c.style.opacity = '1'; }, 300 + i * step);
+  });
 
+  var t2 = 300 + n * step + 300;
   setTimeout(function() {
-    // After introName is faded, hide it and fade the overlay
+    introName.style.transition = 'color 0.7s ease';
+    introName.style.color = HARVARD_CRIMSON;
+  }, t2);
+
+  var t3 = t2 + 900;
+  setTimeout(function() {
+    var tr = siteTitle.getBoundingClientRect();
+    introName.style.transition = 'left 0.85s cubic-bezier(0.76,0,0.24,1), top 0.85s cubic-bezier(0.76,0,0.24,1)';
+    introName.style.left = Math.round(tr.left) + 'px';
+    introName.style.top  = Math.round(tr.top)  + 'px';
+  }, t3);
+
+  var t4 = t3 + 900;
+  setTimeout(function() {
+    /* 1. Swap: real header title in, animated intro-name out */
+    siteTitle.style.color = HARVARD_CRIMSON;
+    siteTitle.style.visibility = 'visible';
     introName.style.display = 'none';
 
-    overlay.style.transition = 'opacity 1.2s ease';
-    overlay.style.opacity = '0';
+    /* 2. Show the home section while overlay is still fully opaque white */
+    showSection('home');
 
-    setTimeout(function() {
-      // Finally, hide the overlay completely
-      overlay.style.visibility = 'hidden';
-      // No need to force any further styles on homeEl
-    }, 1300); // Slightly longer than the overlay transition
-  }, 500); // Match introName fade time
-}, t4);
-  });
+    /* 3. Lock section at full opacity under the opaque overlay */
+    var homeEl = document.getElementById('home');
+    if (homeEl) {
+      homeEl.style.cssText += '; animation:none !important; opacity:1 !important; transform:none !important;';
+    }
+
+    /* 4. Two rAFs ensure the browser has fully painted everything.
+          Then fade the overlay smoothly. Only restore section styles
+          AFTER the overlay is completely gone — no flash possible. */
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        setTimeout(function() {
+          overlay.style.transition = 'opacity 1.8s cubic-bezier(0.4,0,0.2,1)';
+          overlay.style.opacity = '0';
+          setTimeout(function() {
+            overlay.style.visibility = 'hidden';
+            /* Now safe to unlock the section */
+            if (homeEl) {
+              homeEl.style.cssText = homeEl.style.cssText
+                .replace(/animation[^;]*;?\s*/gi,'')
+                .replace(/opacity[^;]*;?\s*/gi,'')
+                .replace(/transform[^;]*;?\s*/gi,'');
+            }
+          }, 1900);
+        }, 100);
+      });
+    });
+  }, t4);
 })();
 </script>
 </body>
