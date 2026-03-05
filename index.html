@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mayur Chhoriya</title>
+  <meta name="description" content="Mayur Chhoriya - personal corner of the internet." />
+  <meta name="author" content="Mayur Chhoriya" />
+  <meta name="google-site-verification" content="6mkz4weGEWZug-OVoR0KVTC4HdgPWSWBgE6GyKEUi-U" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iI0E1MUMzMCIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TTwvdGV4dD4KPC9zdmc+" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { background:#fdf9f4; color:#3d3530; font-family:Georgia,"Times New Roman",serif; font-size:18px; line-height:1.8; }
+    a { color:inherit; text-decoration:none; }
+
+    /* ── Header ── */
+    .site-header { max-width:860px; margin:0 auto; padding:3rem 2rem 0.5rem; }
+    .site-title { font-family:'Homemade Apple',cursive; font-weight:400; font-size:clamp(1.4rem,4.5vw,2.8rem); line-height:1.3; letter-spacing:0.02em; display:block; cursor:pointer; color:#A51C30; visibility:hidden; }
+    .site-title em { font-style:normal; font-weight:400; }
+    .site-tagline { font-size:0.78rem; color:#9a7450; margin-top:0.5rem; letter-spacing:0.22em; text-transform:uppercase; font-style:italic; }
+
+    /* ── Nav ── */
+    .site-nav { max-width:860px; margin:0 auto; padding:0 2rem; border-bottom:1px solid #c8a882; margin-top:1.2rem; }
+    .site-nav ul { list-style:none; display:flex; }
+    .site-nav li a { display:inline-block; padding:0.6rem 1.5rem 0.6rem 0; margin-right:0.5rem; font-size:0.88rem; color:#3d3530; transition:color 0.15s; cursor:pointer; letter-spacing:0.04em; }
+    .site-nav li a:hover, .site-nav li a.active { color:#A51C30; }
+
+    /* ── Content ── */
+    .site-content { max-width:860px; margin:0 auto; padding:3rem 2rem 6rem; }
+    section { display:none; }
+    section.active { display:block; animation:fadein 0.3s ease both; }
+    @keyframes fadein { from{opacity:0;transform:translateY(4px);} to{opacity:1;transform:translateY(0);} }
+    #home.intro-pre-shown { display:block; animation:none; }
+
+    /* ══════════════════════════════════════
+       HOME HERO - grand typographic version
+       (swap .home-hero-bg to url('your-photo.jpg')
+        when you have a portrait ready)
+    ══════════════════════════════════════ */
+    #home { padding:0; }
+    .home-spacer { min-height: calc(100vh - 200px); }
+
+    .home-hero {
+      position: relative;
+      width: 100vw;
+      margin-left: calc(((100vw - 860px) / 2 + 2rem) * -1);
+      min-height: 96vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+
+    /* Grain texture overlay - gives the cream depth */
+    .home-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Subtle radial vignette from the sides */
+    .home-hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 90% 80% at 50% 50%, transparent 40%, rgba(60,38,20,0.09) 100%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── When you have a portrait: uncomment & set your image ──
+
+    /* Decorative vertical rule - left accent */
+    .hero-rule-left {
+      position: absolute;
+      left: 6%;
+      top: 10%;
+      bottom: 12%;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, #c8a882 20%, #c8a882 80%, transparent);
+      z-index: 2;
+      opacity: 0.5;
+    }
+
+    /* Decorative corner mark - top right */
+    .hero-corner {
+      position: absolute;
+      top: 2.5rem;
+      right: 5%;
+      z-index: 2;
+      font-size: 0.62rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: #b8926a;
+      writing-mode: vertical-rl;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .hero-corner.visible { opacity: 0.7; transform: translateY(0); }
+
+    /* Crimson top border */
+    .hero-crimson-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: #A51C30;
+      z-index: 3;
+    }
+
+    /* Main name block - anchored bottom-left */
+    .hero-name-block {
+      position: relative;
+      z-index: 3;
+      padding: 0 8% 7vh 8%;
+      max-width: 900px;
+    }
+
+    .hero-pre {
+      font-size: 0.68rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: #A51C30;
+      margin-bottom: 1.6rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.8s ease 0.1s, transform 0.8s ease 0.1s;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .hero-pre::after {
+      content: '';
+      display: inline-block;
+      width: 40px;
+      height: 1px;
+      background: #A51C30;
+      opacity: 0.5;
+    }
+    .hero-pre.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-name-script {
+      font-family: 'Homemade Apple', cursive;
+      font-size: clamp(3.2rem, 9vw, 7.5rem);
+      line-height: 1.15;
+      color: #2a1f1a;
+      letter-spacing: 0.01em;
+      display: block;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 1s ease 0.3s, transform 1s cubic-bezier(0.23,1,0.32,1) 0.3s;
+    }
+    .hero-name-script em {
+      font-style: normal;
+      color: #A51C30;
+    }
+    .hero-name-script.visible { opacity: 1; transform: translateY(0); }
+
+    .hero-line {
+      display: block;
+      width: 60px;
+      height: 1px;
+      background: #c8a882;
+      margin: 2rem 0 1.6rem;
+      opacity: 0;
+      transition: opacity 0.8s ease 0.8s, width 1.2s ease 0.8s;
+    }
+    .hero-line.visible { opacity: 1; width: 120px; }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1rem, 2.2vw, 1.5rem);
+      font-style: italic;
+      font-weight: 300;
+      color: #6b4f3a;
+      letter-spacing: 0.04em;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.9s ease 1s, transform 0.9s ease 1s;
+      line-height: 1.5;
+    }
+    .hero-tagline.visible { opacity: 1; transform: translateY(0); }
+
+    /* Scroll nudge */
+    .hero-scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      right: 5%;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      transition: opacity 1s ease 1.6s;
+    }
+    .hero-scroll-hint.visible { opacity: 0.4; }
+    .hero-scroll-hint span {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #9a7450;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, #9a7450, transparent);
+      animation: scrollpulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollpulse {
+      0%, 100% { transform: scaleY(1); opacity: 0.4; }
+      50% { transform: scaleY(0.6); opacity: 1; }
+    }
+
+    /* ── Home sections below the hero ── */
+    .home-below {
+      padding: 3.5rem 0 0;
+    }
+
+    /* ── On the wire ── */
+    .wire-layout { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:start; }
+    .wire-col-heading { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.18em; color:#b8926a; margin-bottom:1.4rem; padding-bottom:0.6rem; border-bottom:1px solid #e0cdb5; }
+    .wire-item { padding:1.6rem 0; border-bottom:1px solid #e0cdb5; }
+    .wire-item:last-child { border-bottom:none; }
+    .wire-tag { font-size:0.58rem; text-transform:uppercase; letter-spacing:0.14em; color:#A51C30; margin-bottom:0.6rem; }
+    .wire-quote { font-size:0.92rem; font-style:italic; line-height:1.85; color:#2a2a2a; margin-bottom:1rem; padding-left:1rem; border-left:2px solid #A51C30; }
+    .wire-note { font-size:0.82rem; color:#6b4f3a; line-height:1.8; margin-bottom:1rem; font-style:normal; }
+    .wire-source { display:flex; flex-direction:column; gap:0.15rem; text-decoration:none; }
+    .wire-pub { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.14em; color:#b8926a; }
+    .wire-title { font-size:0.78rem; color:#9a7450; border-bottom:1px solid transparent; transition:color 0.15s, border-color 0.15s; display:inline; }
+    .wire-source:hover .wire-title { color:#A51C30; border-bottom-color:#A51C30; }
+    @media(max-width:640px){ .wire-layout { grid-template-columns:1fr; gap:0; } .wire-right { margin-top:2.5rem; padding-top:2rem; border-top:1px solid #e0cdb5; } }
+
+    /* ── Get in touch ── */
+    .home-contact-block { max-width:580px; padding-top:2.5rem; border-top:1px solid #c8a882; text-align:center; }
+    .home-contact-title { font-size:1.3rem; font-weight:normal; margin-bottom:0.3rem; }
+    .home-contact-desc { font-size:0.9rem; color:#3d3530; margin-bottom:1.4rem; }
+    .home-contact-icons { display:flex; gap:1.8rem; justify-content:center; align-items:center; }
+    .home-contact-icons a { color:#3d3530; transition:opacity 0.15s; display:flex; align-items:center; }
+    .home-contact-icons a:hover { opacity:0.4; }
+    .home-contact-icons svg { width:28px; height:28px; fill:#2a2a2a; }
+
+    /* Contact form */
+    .contact-form { max-width:420px; margin:2.2rem auto 0; text-align:left; }
+    .contact-form input, .contact-form textarea { width:100%; font-family:Georgia,"Times New Roman",serif; font-size:0.88rem; color:#3d3530; background:#fdf9f4; border:none; border-bottom:1px solid #b8926a; padding:0.55rem 0; outline:none; transition:border-color 0.2s; resize:none; display:block; margin-bottom:1.3rem; }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color:#b8926a; font-style:italic; }
+    .contact-form input:focus, .contact-form textarea:focus { border-bottom-color:#3d3530; }
+    .contact-form textarea { min-height:80px; }
+    .contact-form button { display:block; margin:0 auto; background:#2a2a2a; color:#fff; font-family:Georgia,"Times New Roman",serif; font-size:0.68rem; font-weight:400; letter-spacing:0.16em; text-transform:uppercase; padding:0.48rem 1.5rem; border:none; cursor:pointer; transition:background 0.15s; }
+    .contact-form button:hover { background:#5a3e28; }
+    .form-success { font-size:0.83rem; color:#9a7450; font-style:italic; text-align:center; margin-top:1rem; display:none; }
+
+    /* ── Page titles ── */
+    h2.page-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:2rem; margin-bottom:0.2rem; letter-spacing:0.01em; }
+    .page-sub { color:#9a7450; font-style:italic; font-size:0.85rem; margin-bottom:2.5rem; }
+    hr { border:none; border-top:1px solid #c8a882; margin:0 0 2.5rem; }
+    .back-btn { display:inline-block; font-size:0.75rem; color:#9a7450; border-bottom:1px solid #c8a882; padding-bottom:1px; margin-bottom:2rem; cursor:pointer; transition:color 0.15s,border-color 0.15s; }
+    .back-btn:hover { color:#A51C30; border-color:#A51C30; }
+
+    /* ── Musings ── */
+    .coming-soon-msg { max-width:560px; padding:5rem 0 3rem; }
+    .cs-title { font-size:1rem; color:#3d3530; font-style:italic; margin-bottom:0.3rem; }
+    .cs-sub { font-size:0.68rem; color:#9a7450; letter-spacing:0.14em; text-transform:uppercase; }
+
+    /* ── Fun grid ── */
+    .fun-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; width:340px; }
+    .fun-card { cursor:pointer; border:1px solid #c8a882; border-radius:2px; overflow:hidden; transition:border-color 0.2s,box-shadow 0.2s,transform 0.18s; background:#fdf9f4; text-align:center; }
+    .fun-card:hover { border-color:#3a9e96; box-shadow:0 3px 16px rgba(0,0,0,0.07); transform:translateY(-2px); }
+    .fun-card-label { background:#2a2a2a; color:#fff; font-size:0.6rem; font-weight:400; letter-spacing:0.1em; text-transform:uppercase; padding:0.35rem 0.5rem; text-align:center; }
+    .fun-card:hover .fun-card-label { background:#2d2d2d; }
+    .fun-card-preview { padding:0.45rem 0.6rem 0.5rem; }
+    .fun-card-preview ul { list-style:none; }
+    .fun-card-preview ul li { font-size:0.65rem; color:#3d3530; padding:0.04rem 0; font-style:italic; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .fun-card-preview ul li::before { content:"· "; color:#b8926a; font-style:normal; }
+    .fun-card-last { grid-column:1/-1; width:calc(50% - 0.425rem); margin:0 auto; }
+
+    /* ── Reading ── */
+    .book-item { padding:1.4rem 0; border-bottom:1px solid #e0cdb5; max-width:580px; }
+    .book-item:last-child { border-bottom:none; }
+    .book-title { font-size:1.05rem; font-style:italic; margin-bottom:0.1rem; }
+    .book-author { font-size:0.7rem; color:#9a7450; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.4rem; }
+    .book-note { font-size:0.88rem; color:#3d3530; line-height:1.7; }
+    .coming-soon-tag { display:inline-block; font-size:0.63rem; color:#9a7450; border:1px solid #c8a882; padding:0.05rem 0.4rem; border-radius:2px; letter-spacing:0.05em; margin-top:0.3rem; }
+
+    /* ── Curated Writings ── */
+    .writing-item { border-bottom:1px solid #e0cdb5; max-width:580px; }
+    .writing-item:last-child { border-bottom:none; }
+    .writing-preview { cursor:pointer; padding:1.4rem 0; transition:opacity 0.15s; }
+    .writing-preview:hover { opacity:0.7; }
+    .writing-meta { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:0.4rem; }
+    .writing-type { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.12em; color:#b8926a; }
+    .writing-toggle-hint { font-size:0.62rem; color:#c8a882; font-style:italic; }
+    .writing-title { font-size:1.05rem; font-style:italic; margin-bottom:0.1rem; }
+    .writing-author { font-size:0.7rem; color:#9a7450; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.7rem; }
+    .writing-excerpt { font-size:0.85rem; color:#3d3530; line-height:1.75; }
+    .writing-full-body { padding:0 0 1.4rem; }
+    .writing-full-body p { font-size:0.9rem; color:#3d3530; line-height:1.85; margin-bottom:1rem; }
+    .writing-cta { margin-top:1.2rem; }
+    .writing-cta a { font-size:0.72rem; color:#9a7450; border-bottom:1px solid #c8a882; padding-bottom:1px; text-decoration:none; transition:color 0.15s,border-color 0.15s; }
+    .writing-cta a:hover { color:#A51C30; border-color:#A51C30; }
+
+    /* ── Fun layout (2x2 grid) ── */
+    .fun-layout { display:grid; grid-template-columns:1fr 1fr; gap:0 3rem; }
+    .fun-col { border-bottom:1px solid #e0cdb5; }
+    .fun-col-heading { display:flex; justify-content:space-between; align-items:center; padding:1.1rem 0; cursor:pointer; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.18em; color:#b8926a; transition:color 0.15s; user-select:none; }
+    .fun-col-heading:hover { color:#A51C30; }
+    .fun-col-arrow { font-size:0.85rem; color:#c8a882; font-style:normal; transition:transform 0.2s, color 0.15s; display:inline-block; }
+    .fun-col-heading.open .fun-col-arrow { transform:rotate(45deg); color:#A51C30; }
+    .fun-col-body { padding-bottom:1.2rem; }
+    .fun-col { }
+    .fun-book-item { padding:1rem 0; border-bottom:1px solid #e0cdb5; }
+    .fun-book-item:last-child { border-bottom:none; }
+    .fun-book-title { font-size:0.92rem; font-style:italic; color:#2a2a2a; margin-bottom:0.1rem; }
+    .fun-book-author { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.08em; color:#9a7450; margin-bottom:0.3rem; }
+    .fun-book-note { font-size:0.82rem; color:#3d3530; line-height:1.7; }
+    .fun-ftv-badge { display:inline-block; font-size:0.55rem; text-transform:uppercase; letter-spacing:0.1em; color:#fff; background:#2a2a2a; padding:0.05rem 0.35rem; border-radius:1px; margin-bottom:0.25rem; }
+    .fun-writing-item { border-bottom:1px solid #e0cdb5; }
+    .fun-writing-item:last-child { border-bottom:none; }
+    .fun-writing-preview { padding:0.9rem 0 0.5rem; cursor:pointer; transition:opacity 0.15s; }
+    .fun-writing-preview:hover { opacity:0.7; }
+    .fun-writing-type { font-size:0.58rem; text-transform:uppercase; letter-spacing:0.12em; color:#b8926a; margin-bottom:0.2rem; }
+    .fun-writing-hint { font-size:0.6rem; color:#c8a882; font-style:italic; margin-top:0.3rem; }
+    .fun-writing-full { padding:0 0 0.9rem; }
+    .fun-writing-body { font-size:0.82rem; color:#3d3530; line-height:1.75; font-style:italic; margin-bottom:0.5rem; }
+    .fun-writing-link { font-size:0.72rem; color:#9a7450; border-bottom:1px solid #c8a882; padding-bottom:1px; text-decoration:none; transition:color 0.15s,border-color 0.15s; }
+    .fun-writing-link:hover { color:#A51C30; border-color:#A51C30; }
+    @media(max-width:640px){ .fun-layout { grid-template-columns:1fr; gap:0; } .fun-col { border-top:1px solid #e0cdb5; padding-top:2rem; margin-top:2rem; } .fun-col:first-child { border-top:none; padding-top:0; margin-top:0; } }
+
+    /* ── Musings ── */
+    .musing-post { max-width:620px; }
+    .musing-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:1.7rem; font-style:italic; margin-bottom:0.3rem; color:#2a1f1a; }
+    .musing-meta { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.16em; color:#b8926a; margin-bottom:2rem; }
+    .musing-body p { font-size:0.97rem; color:#3d3530; line-height:1.95; margin-bottom:1.3rem; }
+    .musing-subhead { font-family:'Cormorant Garamond',Georgia,serif; font-weight:700; font-size:1.1rem; font-style:normal; color:#2a1f1a; margin:2rem 0 0.8rem; letter-spacing:0.01em; }
+    .musing-figure { margin:2rem 0; }
+    .musing-img { max-width:45%; height:auto; display:block; margin:0 auto; }
+    .musing-img-placeholder { font-size:0.82rem; color:#9a7450; font-style:italic; padding:2rem; border:1px dashed #c8a882; text-align:center; }
+    .musing-caption { font-size:0.72rem; color:#9a7450; font-style:italic; margin-top:0.5rem; letter-spacing:0.02em; text-align:center; }
+    .musing-header { display:flex; justify-content:space-between; align-items:flex-start; cursor:pointer; padding-bottom:1.2rem; border-bottom:1px solid #e0cdb5; gap:1.5rem; }
+    .musing-header:hover .musing-title { color:#A51C30; }
+    .musing-header.open { border-bottom:none; padding-bottom:0; }
+    .musing-toggle-arrow { font-size:0.95rem; color:#c8a882; flex-shrink:0; margin-top:0.3rem; transition:transform 0.2s,color 0.15s; display:inline-block; }
+    .musing-header.open .musing-toggle-arrow { transform:rotate(45deg); color:#A51C30; }
+    .musing-excerpt { font-size:0.88rem; color:#6b4f3a; line-height:1.75; font-style:italic; margin-top:0.5rem; margin-bottom:0; }
+    .musing-body { padding-top:1.4rem; border-top:1px solid #e0cdb5; }
+    .musing-comment-toggle { font-size:0.72rem; color:#9a7450; border-bottom:1px solid #c8a882; padding-bottom:1px; cursor:pointer; display:inline-block; margin-top:1.5rem; transition:color 0.15s,border-color 0.15s; }
+    .musing-comment-toggle:hover { color:#A51C30; border-color:#A51C30; }
+    .musing-comment-section { max-width:620px; margin-top:2rem; padding-top:2rem; border-top:1px solid #e0cdb5; }
+    .musing-comment-inner { max-width:420px; }
+    .musing-comment-heading { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.18em; color:#b8926a; margin-bottom:0.4rem; }
+    .musing-comment-sub { font-size:0.78rem; color:#9a7450; font-style:italic; margin-bottom:1.4rem; }
+    .musing-comment-form input, .musing-comment-form textarea { width:100%; font-family:Georgia,"Times New Roman",serif; font-size:0.88rem; color:#3d3530; background:#fdf9f4; border:none; border-bottom:1px solid #b8926a; padding:0.55rem 0; outline:none; transition:border-color 0.2s; resize:none; display:block; margin-bottom:1.1rem; }
+    .musing-comment-form input::placeholder, .musing-comment-form textarea::placeholder { color:#b8926a; font-style:italic; }
+    .musing-comment-form input:focus, .musing-comment-form textarea:focus { border-bottom-color:#3d3530; }
+    .musing-comment-form textarea { min-height:80px; }
+    .musing-comment-form button { display:block; background:#2a2a2a; color:#fff; font-family:Georgia,"Times New Roman",serif; font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; padding:0.48rem 1.5rem; border:none; cursor:pointer; transition:background 0.15s; }
+    .musing-comment-form button:hover { background:#5a3e28; }
+    .musing-comment-success { font-size:0.83rem; color:#9a7450; font-style:italic; margin-top:1rem; display:none; }
+    .musing-link { color:#3d3530; border-bottom:1px solid #c8a882; text-decoration:none; transition:color 0.15s,border-color 0.15s; }
+    .musing-link:hover { color:#A51C30; border-color:#A51C30; }
+
+    /* ── Blogroll ── */
+    .blogroll-heading { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.18em; color:#b8926a; margin-bottom:1.4rem; }
+    .blogroll-item { padding:1rem 0; border-bottom:1px solid #e0cdb5; display:flex; flex-direction:column; gap:0.18rem; max-width:580px; }
+    .blogroll-item:last-child { border-bottom:none; }
+    .blogroll-name { font-size:0.9rem; color:#3d3530; text-decoration:none; border-bottom:1px solid transparent; transition:color 0.15s, border-color 0.15s; display:inline; }
+    .blogroll-name:hover { color:#A51C30; border-bottom-color:#A51C30; }
+    .blogroll-author { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:#9a7450; }
+    .blogroll-desc { font-size:0.82rem; color:#3d3530; line-height:1.7; font-style:italic; }
+
+    /* ── Film & TV ── */
+    .ftv-item { padding:1.3rem 0; border-bottom:1px solid #e0cdb5; cursor:pointer; max-width:580px; display:flex; justify-content:space-between; align-items:center; transition:opacity 0.15s; }
+    .ftv-item:last-child { border-bottom:none; }
+    .ftv-item:hover { opacity:0.55; }
+    .ftv-badge { display:inline-block; font-size:0.58rem; text-transform:uppercase; letter-spacing:0.1em; color:#fff; background:#2a2a2a; padding:0.06rem 0.38rem; margin-bottom:0.3rem; border-radius:1px; }
+    .ftv-title { font-size:1rem; font-style:italic; margin-bottom:0.12rem; }
+    .ftv-note { font-size:0.82rem; color:#3d3530; }
+    .ftv-arrow { color:#9a7450; }
+    .ftv-detail-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:1.8rem; font-style:italic; margin-bottom:0.2rem; }
+    .ftv-detail-meta { font-size:0.7rem; color:#9a7450; text-transform:uppercase; letter-spacing:0.08em; margin-bottom:2rem; }
+    .ftv-detail-body { max-width:580px; font-size:0.93rem; color:#3d3530; line-height:1.85; }
+
+    /* ── Listening ── */
+    .listen-item { padding:1rem 0; border-bottom:1px solid #e0cdb5; display:flex; align-items:center; gap:1rem; max-width:580px; }
+    .listen-item:last-child { border-bottom:none; }
+    .listen-disc { flex-shrink:0; width:36px; height:36px; border:2px solid #2c2420; border-radius:50%; position:relative; }
+    .listen-disc::after { content:""; width:8px; height:8px; background:#2a2a2a; border-radius:50%; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); }
+    .listen-text-title { font-size:0.95rem; margin-bottom:0.03rem; }
+    .listen-text-sub { font-size:0.78rem; color:#9a7450; font-style:italic; }
+
+    footer { max-width:860px; margin:0 auto; padding:1.5rem 2rem; border-top:1px solid #c8a882; font-size:0.73rem; color:#9a7450; }
+
+    /* ── Mobile ── */
+    @media(max-width:640px){
+      .site-nav { padding:0 1rem; overflow-x:auto; }
+      .site-nav ul { flex-wrap:nowrap; white-space:nowrap; }
+      .site-nav li a { font-size:0.78rem; padding:0.6rem 1.1rem 0.6rem 0; margin-right:0.3rem; letter-spacing:0.02em; white-space:nowrap; }
+      .home-hero { margin-left: -1rem; }
+      .hero-name-block { padding: 0 6% 6vh 6%; }
+      .hero-name-script { font-size: clamp(2.6rem, 13vw, 4.5rem); }
+      .fun-grid { grid-template-columns:1fr 1fr; width:100%; }
+      .fun-card-last { width:calc(50% - 0.425rem); }
+    }
+
+    /* ── Intro overlay ── */
+    #intro-overlay { position:fixed; inset:0; z-index:9999; background:#fdf9f4; opacity:1; pointer-events:none; will-change:opacity; }
+    #intro-name { position:fixed; font-family:'Homemade Apple',cursive; font-weight:400; font-size:clamp(1.4rem,4.5vw,2.8rem); line-height:1.3; letter-spacing:0.02em; color:#1c1c1c; white-space:nowrap; width:fit-content; }
+    #intro-name em { font-style:normal; font-weight:400; }
+    .ic { opacity:0; display:inline-block; }
+    .is { display:inline-block; width:0.28em; }
+  </style>
+</head>
+<body>
+
+<div id="intro-overlay"><div id="intro-name"></div></div>
+
+<div class="site-header">
+  <span class="site-title" onclick="showSection('home')">Mayur <em>Chhoriya</em></span>
+  <div class="site-tagline">Bad Choice Road</div>
+</div>
+
+<nav class="site-nav">
+  <ul>
+    <li><a id="nav-home" class="active" onclick="showSection('home')">Home</a></li>
+    <li><a id="nav-musings" onclick="showSection('musings')">Musings</a></li>
+    <li><a id="nav-fun" onclick="showSection('fun')">Fun</a></li>
+    <li><a id="nav-wire" onclick="showSection('wire')">On the wire</a></li>
+    <li><a id="nav-contact" onclick="showSection('contact')">Contact</a></li>
+  </ul>
+</nav>
+
+<div class="site-content">
+
+  <!-- HOME -->
+  <section id="home" class="intro-pre-shown">
+
+    <div class="home-spacer"></div>
+    <!-- Below the fold -->
+    <div class="home-below"></div>
+
+  </section>
+
+  <!-- ON THE WIRE -->
+  <section id="wire">
+    <h2 class="page-title">On the wire</h2>
+    <p class="page-sub">Politics, history, technology and culture.</p>
+    <hr>
+    <div class="wire-layout">
+
+      <!-- LEFT: Articles -->
+      <div class="wire-left">
+        <div class="wire-col-heading">Worth your time</div>
+        <div class="wire-item">
+          <div class="wire-tag">Politics · Middle East</div>
+          <div class="wire-quote">"War alters political psychology in ways that are rarely linear. Those who loathe the clerical establishment may still recoil at foreign jets in Iranian skies... Wars of choice rarely confine themselves to their intended targets. They consume not only the combatants but the assumptions that animate them."</div>
+          <a class="wire-source" href="https://www.lrb.co.uk/blog/2026/march/the-dry-and-the-wet-burn-together" target="_blank" rel="noopener">
+            <span class="wire-pub">London Review of Books</span>
+            <span class="wire-title">The Dry and the Wet Burn Together ↗</span>
+          </a>
+        </div>
+        <div class="wire-item">
+          <div class="wire-tag">Computer Science · AI</div>
+          <div class="wire-quote">"Shock! Shock! I learned yesterday that an open problem I'd been working on for several weeks had just been solved by Claude Opus 4.6... It seems that I'll have to revise my opinions about 'generative AI' one of these days."</div>
+          <div class="wire-note">The math in this paper will lose most of us and that's fine. That someone like Donald Knuth is pausing, reconsidering, and finding genuine joy in what AI can do - that's the thing worth noticing.</div>
+          <a class="wire-source" href="https://www-cs-faculty.stanford.edu/~knuth/papers/claude-cycles.pdf" target="_blank" rel="noopener">
+            <span class="wire-pub">Donald Knuth · Stanford · February 2026</span>
+            <span class="wire-title">Claude's Cycles ↗</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT: Blogs -->
+      <div class="wire-right">
+        <div class="wire-col-heading">Blogs I follow</div>
+        <div class="blogroll-item">
+          <a class="blogroll-name" href="https://indconlawphil.wordpress.com/" target="_blank" rel="noopener">Indian Constitutional Law and Philosophy ↗</a>
+          <span class="blogroll-author">Gautam Bhatia</span>
+          <span class="blogroll-desc">Rigorous writing on constitutional law, civil liberties, and the politics of the Indian judiciary. Features guest posts.</span>
+        </div>
+        <div class="blogroll-item">
+          <a class="blogroll-name" href="https://manuspillai.com/" target="_blank" rel="noopener">Manu S. Pillai ↗</a>
+          <span class="blogroll-author">Manu S. Pillai</span>
+          <span class="blogroll-desc">A historian's essays on forgotten corners of Indian history - courts, kingdoms, and the people history tends to overlook.</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MUSINGS -->
+  <section id="musings">
+    <h2 class="page-title">Musings</h2>
+    <p class="page-sub">Essays, half-thoughts, and things I couldn't stop thinking about.</p>
+    <hr>
+
+    <!-- POST: Sethu -->
+    <article class="musing-post">
+      <div class="musing-header" onclick="toggleMusing('musing-sethu')">
+        <div>
+          <h3 class="musing-title">A Queen Forgotten by History</h3>
+          <div class="musing-meta">Book Review &middot; The Ivory Throne</div>
+          <p class="musing-excerpt">A 6-year-old girl became the Senior Maharani of Travancore. A forgotten story of matrilineal power, palace intrigue, Victorian morality, and the quiet end of a dynasty.</p>
+        </div>
+        <span class="musing-toggle-arrow" id="musing-sethu-arrow">&#43;</span>
+      </div>
+
+      <div class="musing-body" id="musing-sethu" style="display:none;">
+        <p>By 1900, the ruling family of Travancore was on the brink of extinction because there were no female heirs to continue the matrilineal line. Maharani Lakshmi Bayi asked her brother, Maharajah Moolam Thirunal, to adopt two young girls into the royal family. The girls selected were granddaughters of Raja Ravi Varma, a royal-turned-painter.</p>
+
+        <p>Not long after, a series of deaths in the royal family altered the line of succession, leaving a 6-year-old girl as the Senior Maharani of the state. While Maharajah Moolam Thirunal Rama Varma continued to reign, she became central to Travancore&#x2019;s matrilineal succession system.</p>
+
+        <p>That 6-year-old was Sethu Lakshmi Bayi, one of the two young girls adopted into the royal line (the other, Sethu Parvathi Bayi, became the Junior Maharani). And if that name does not immediately ring a bell, that is precisely the point.</p>
+
+        <figure class="musing-figure">
+          <img src="rani.png" alt="Sethu Lakshmi Bayi as the Senior Maharani of Travancore" class="musing-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+          <div class="musing-img-placeholder" style="display:none;">[ Image: Sethu Lakshmi Bayi as the Senior Maharani of Travancore ]</div>
+          <figcaption class="musing-caption">Sethu Lakshmi Bayi as the Senior Maharani of Travancore</figcaption>
+        </figure>
+
+        <p>For someone who ruled millions and presided over one of India&#x2019;s most prosperous princely states as Regent from 1924 to 1931, she has quietly faded from public memory. The story of her life and the unusual political world she inhabited is largely missing from popular Indian history.</p>
+
+        <p><a href="https://www.amazon.in/Ivory-Throne-Chronicles-House-Travancore-ebook/dp/B0182EZKY6" target="_blank" rel="noopener" class="musing-link">Manu S. Pillai&#x2019;s <em>The Ivory Throne</em></a> uncovers this largely forgotten world. It reveals a political and social order very different from the conventional image of Indian monarchy. At the heart of this world was the matrilineal inheritance system called <em>Marumakkathayam</em>. In Travancore, power flowed through women. The title of Maharani was not just ceremonial. Inheritance and legitimacy all came through the female line. A ruler was not necessarily succeeded by his son but by his sister&#x2019;s son.</p>
+
+        <h4 class="musing-subhead">The Palace as a World of Ritual and Control</h4>
+
+        <p>This system shaped every part of royal life. Daily routines at <em>Sundara Vilasam Palace</em> were controlled by the Palace Manual, which consisted of twelve volumes. Its rules covered even the mundane tasks - from the brushing of <em>royal pearls</em> (yes, her teeth were referred to as royal pearls) supervised by court dentists, to sleeping in the proper posture at night. There was no escape from the strict routines. Each morning, the Maharani&#x2019;s staff guided her and her cousins to begin the royal bath, known as <em>pallineerattu</em>, in its full form. She wore crisp <em>mundus</em>, which made a rustling sound when she walked, changing them three times a day, all freshly laundered. She was always accompanied, and the constant presence of devoted servants enhanced her stature. A simple walk around the palace required a retinue of guards and maidservants, called <em>pattakkars</em>.</p>
+
+        <p>When Sethu Lakshmi Bayi turned 10, it was uncertain which eligible nobleman from Travancore would win her royal hand and approval. The choices were limited. Sethu Lakshmi Bayi could select her husband from only ten highborn families. Once the queen made her choice, the chosen groom, Ravi Verma, was taken to Bhakti Vilas, the Dewan&#x2019;s official residence, where an English doctor, Col. James, performed a thorough medical examination. After receiving the doctor&#x2019;s approval, the Resident was informed, and through him, the Madras Government. Eventually, when the Maharani was ready for marriage, astrologers determined an auspicious day for the ceremony, while the royal family&#x2019;s head priest awkwardly tutored the young consort in the dos and don&#x2019;ts of lovemaking.</p>
+
+        <figure class="musing-figure">
+          <img src="wedding.png" alt="Sethu Lakshmi Bayi married Sri Rama Varma at the age of 10" class="musing-img" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"/>
+          <div class="musing-img-placeholder" style="display:none;">[ Image: Sethu Lakshmi Bayi married Sri Rama Varma at the age of 10 ]</div>
+          <figcaption class="musing-caption">Sethu Lakshmi Bayi married Sri Rama Varma at the age of 10</figcaption>
+        </figure>
+
+        <p>The Maharani&#x2019;s husband was not the Maharajah; he was merely a <strong>consort</strong>, a nobleman joining the dynasty but remaining socially and politically subordinate to his wife. This status difference was clear everywhere.</p>
+
+        <p>The Maharani&#x2019;s full title highlighted the grandeur of her position: <em>Her Highness Sree Padmanabhasevini, Vanchidharma Vardhini, Raja Rajeshwari, Maharani Pooradam Thirunal Sethu Lakshmi Bayi, Maharaja, Attingal Mootha Thampuran, Companion of the Imperial Order of the Crown of India, Maharani Regent of Travancore.</em> In contrast, her husband was simply <em>Mr. Rama Varma Valiya Koil Thampuran</em>. His main role was to support his wife by creating the next generation. The rank difference was not just symbolic; it was institutional. The consort could not sit in her presence unless invited. He was not allowed to ride in the same carriage as the Maharani, as that would imply equality. When the Maharani entered the capital, she received a twenty-one gun salute, while the consort received only a rifle salute. At royal banquets, the hierarchy was clear. The Maharani and her children were served four types of dessert, while consorts received two, and ordinary guests had to settle for one. As she descended, hundreds of servants greeted her with seven precise <em>namaskars</em>, bowing from their heads to the ground. Even in death, the rules held firm. The palace was reserved for royalty to die. If the consort were nearing death, he had to be carried out to a private building since a subject could not die within royal walls. His children could not attend his funeral because royalty never participates in the ceremonies of subjects.</p>
+
+        <p>Distinguished visitors were trained to follow court protocol. Even the Maharani could not change these protocols. This carefully structured world created a remarkable contradiction. The Maharani had immense authority over millions but lived within a complex framework of restrictions that left little room for personal freedom. These rituals were tools to construct legitimacy. Power needed to be exercised but also had to appear sacred and unquestionable.</p>
+
+        <h4 class="musing-subhead">Palace Rivalry and Intrigue</h4>
+
+        <p>The rivalry between the two adopted princesses of Travancore, Sethu Lakshmi Bayi and Sethu Parvathi Bayi, began early. Both were granddaughters of Raja Ravi Varma, adopted in 1900 to preserve the royal line. Sethu Lakshmi Bayi became the Senior Maharani, while Sethu Parvathi Bayi took on the role of Junior Maharani. However, under Travancore&#x2019;s matrilineal system, the throne would pass through the Junior Maharani&#x2019;s children, meaning that although Sethu Lakshmi Bayi later ruled as Regent, the future king was to be Sethu Parvathi Bayi&#x2019;s son, Chithira Thirunal Balarama Varma. During their rivalry, palace life became tense and suspicious.</p>
+
+        <p>Pillai describes incidents where supporters of the Junior Maharani were accused of hiring sorcerers from the Malabar coast to perform rituals against the Regent. These claims were serious enough to trigger investigations involving British Residents. In politics, Sethu Parvathi Bayi appeared more controversial. British reports mentioned propaganda campaigns and accusations of black magic, later observing her push for a stronger Hindu political agenda after her son gained power.</p>
+
+        <p>Contemporary observers harshly criticized her as &#x201C;arrogant, uncharitable, egotistical, bad-tempered, insular, and vindictive,&#x201D; indicating she was widely disliked. Her son, Maharaja Chithira Thirunal Balarama Varma, was often seen as overshadowed by her influence. Even Archibald Wavell noted that while the Maharaja was &#x201C;not altogether a fool,&#x201D; he was &#x201C;entirely overshadowed by his mother.&#x201D; In contrast, Sethu Lakshmi Bayi frequently appeared moderate and reform-minded. Against her was the ambitious Junior Maharani, eager to secure power for her son.</p>
+
+        <h4 class="musing-subhead">The Victorian Morality</h4>
+
+        <p>The traditional social order in Travancore was not based on monogamy. Instead, it relied on the matrilineal <em>Marumakkathayam</em> system, where family identity and property passed through women. Within this system, the practice of <em>Sambandham</em> gave women a level of sexual and social freedom that was very different from European expectations. A woman did not &#x201C;marry into&#x201D; another family; she remained in charge of her ancestral home (<em>Taravad</em>), and her partners were essentially guests without legal rights to her, her property, or her children. Since inheritance came from a mother&#x2019;s brother to her children, the Western focus on &#x201C;legitimate&#x201D; paternity, which requires strict monogamy, did not exist in the same way.</p>
+
+        <p>Similarly, this indigenous autonomy extended even to physical appearance, as women of the royal household traditionally did not wear blouses or upper garments. This was not a sign of immodesty but rather a cultural norm. Bare-chestedness was a sign of respect toward deities and social superiors.</p>
+
+        <p>The British were scandalized by these customs, viewing both the lack of formal marriage and the traditional dress as signs of &#x201C;moral decline&#x201D; and &#x201C;savagery.&#x201D;</p>
+
+        <p>Consequently, colonial officials and missionaries pressured the Travancore royals and the Nair nobility to adopt Western-style modesty and monogamy to address this perceived social disorder. This pressure eventually sparked reform movements among Western-educated Malayali men, who began to feel embarrassed about their traditional customs when viewed colonial-style. The tragedy of this change is that the women traded their unique matrilineal authority for a patriarchal order, leaving them arguably more restricted than the ancestors who had once ruled from the ivory throne.</p>
+
+        <h4 class="musing-subhead">Travancore under the Regency</h4>
+
+        <p>Sethu Lakshmi Bayi, the Regent, is portrayed as progressive. Her regency between 1924 and 1931 became a period of significant administrative reform. Revenues increased, substantial budget allocations were made for public works and education, and modern infrastructure started appearing in Travancore. Electricity and telephone services expanded, and modern medical facilities became accessible to many people.</p>
+
+        <p>Her administration opened colleges and government offices to women and hired trained teachers from Europe to enhance the educational system. She eliminated special schools for lower castes and enforced a strict policy against segregation in education based on religion or caste. In 1926, she abolished the devadasi system. Midday meals were introduced for children from poorer backgrounds, and educational grants were expanded.</p>
+
+        <p>Minorities also found a place in her government. Despite pressure from conservatives, she appointed Christians and other marginalized groups to senior positions, including the chief minister. Her governance style emphasized moderation and balance with different stakeholders, particularly as she managed the difficult relationship between British authorities, nationalist movements, and the royal establishment.</p>
+
+        <p>One of her most enduring contributions was the Village Panchayat Act of 1925. The strong tradition of participatory panchayat governance seen in Kerala today can be traced back to this focus on local self-government.</p>
+
+        <p>During the early years of her regency, which coincided with the Vaikom Satyagraha, Sethu Lakshmi Bayi met Mahatma Gandhi in 1925 to discuss the demand that lower castes be allowed to use the roads around the Vaikom Mahadeva Temple. Gandhi was struck by her quiet, unadorned appearance (she received him in a plain white Kerala sari rather than royal jewels) which reflected the restrained style of her rule. Soon after their meeting, a royal proclamation opened almost all the public roads to all castes, a step Gandhi later described in <strong>Young India</strong> as laying a &#x201C;bedrock of freedom,&#x201D; while even the Viceroy praised her administration as a period of unusual prosperity. In 1929, the Viceroy referred to her rule as a period of &#x201C;unexampled prosperity&#x201D;, and later Louis Mountbatten remarked that no one who met her could forget her, calling her a &#x201C;shining example to womanhood as a great queen and a great woman&#x201D;.</p>
+
+        <h4 class="musing-subhead">Travancore and Its Wider Historical World</h4>
+
+        <p>The book outlines the state&#x2019;s journey from the arrival of Portuguese explorers on the Malabar coast to its eventual merger with the Indian Union. Kerala emerges as a highly cosmopolitan region shaped by centuries of global trade. Merchants, missionaries, and travelers from around the world passed through its ports. The Travancore court itself became a cultural hub influenced by both Indian traditions and European ideas.</p>
+
+        <p>One notable figure associated with this environment was the celebrated painter Raja Ravi Varma, whose artistic style combined European realism with Indian mythological themes. British Residents and colonial administrators also played a significant role in shaping the political climate of the court. Thanks to its location in the peninsula region, Travancore was never isolated. Its political and cultural life was deeply connected to global networks of trade, empire, and intellectual exchange.</p>
+
+        <h4 class="musing-subhead">The End of a Royal World</h4>
+
+        <p>Despite the prosperity of her regency, palace politics gradually diminished Sethu Lakshmi Bayi&#x2019;s influence. By the time she reached her forties, she had become increasingly isolated within the court. After stepping back from active involvement in state affairs, she spent her time until 1947 in Travancore with her husband and two daughters. Then came a dramatic historical shift. Indian independence led to the end of princely states as sovereign entities. In 1949, the princely state of Travancore merged with the Republic of India, effectively concluding centuries of monarchy.</p>
+
+        <p>A powerful moment captured this transition. In 1957, after a communist government was elected in Kerala, her palace servants formed a union, shouted slogans, removed the Travancore flag, and replaced it with a communist banner on the palace roof. For a dynasty built on elaborate rituals of hierarchy and obedience, the symbolism was clear.</p>
+
+        <p>While Rama Varma was furious and promised to investigate the matter, the incident reinforced the Maharani&#x2019;s decision to leave, which she had been contemplating. Turning to her husband, she simply said, &#x201C;I think it is time for us to go.&#x201D; He sat down across from her, searching for words to comfort his royal wife, leaving quietly and unthanked from the land she had helped shape. Before he could say anything, she wiped her tears. As they drove out of the gates, Rama Varma asked his wife if she wanted a last look at their home. The Maharani, however, refused. Deep down, she knew she would not return. As she left in a car, Sethu Lakshmi Bayi was no longer the grand queen she once was, but a grandmother, a dignified woman in white.</p>
+
+        <p>On the way to the railway station she stopped at the gates of the sacred <em>Sri Padmanabhaswamy</em> Temple. She asked the driver to drop coins into the collection box and offered a final prayer to the deity under whose name she had once ruled the kingdom.</p>
+
+        <p>She then gifted her palaces to the government. Her summer palace became an agricultural university, her official residence became a medical research facility, and her beach became a public tourist destination.</p>
+
+        <h4 class="musing-subhead">The Quiet End of a Queen</h4>
+
+        <p>The former queen moved to Bangalore and shed her fifteen titles. She became simply Shrimati Sethu Lakshmi Bayi. She lived so privately that her neighbors had no idea who she was. She would take the public bus and stand in lines. One time, her daughter went shopping in Bangalore and realized she did not even know the value of a rupee, having never handled money before. In 1971, the Government of India ended the Privy Purse system, so she stopped receiving allowances until her pension was restored shortly before her death after a long legal battle.</p>
+
+        <p>After she transferred ownership of her bungalow to her family, a visitor came calling. To them, the ex-Maharani remarked with a resigned smile, &#x201C;Once I had a kingdom. But that is gone. Then I thought I had my palace, but that is gone too.&#x201D; Her grandson would later say, &#x201C;Being a member of the royal family was like being a favorite bird in a golden cage. You were watched, indulged, and loved. It was only when you were alone with yourself that you remembered the cage.&#x201D;</p>
+
+        <p>When the Maharani died in 1985, the event passed quietly. The woman who once ruled five million people and received ceremonial gun salutes was cremated in a public crematorium with little attention.</p>
+
+        <h4 class="musing-subhead">Reflections on Power and Impermanence</h4>
+
+        <p>One of the themes throughout <em>The Ivory Throne</em> is the fragility of political power. For a kingdom that lasted a thousand years, power, titles, and respect may seem permanent while they exist, but history shows how quickly they fade when the foundations beneath them start to wobble. Her story is a meditation on the transient nature of power.</p>
+
+        <p><em>The Ivory Throne</em> ultimately reminds us that behind every monarchy lies a human story of insecurity, ambition, rivalry, dignity, and loss.</p>
+      </div>
+      <div class="musing-comment-toggle" onclick="toggleMusingComments()">Leave a comment ↓</div>
+    </article>
+
+  </section>
+
+  <!-- COMMENTS (email-only, not public) -->
+  <div class="musing-comment-section" id="musing-comment-section" style="display:none;">
+    <div class="musing-comment-inner">
+      <div class="musing-comment-heading">Leave a comment</div>
+      <p class="musing-comment-sub">Comments are private and sent directly to me by email.</p>
+      <form class="musing-comment-form" id="musing-comment-form" action="https://formspree.io/f/mojnykbk" method="POST">
+        <input type="hidden" name="_subject" value="Comment on: A Queen Forgotten by History" />
+        <input type="text" name="name" placeholder="Your name" required />
+        <input type="email" name="email" placeholder="Your email (optional)" />
+        <textarea name="comment" placeholder="Your comment" required></textarea>
+        <button type="submit">Send</button>
+        <p class="musing-comment-success" id="musing-comment-success">Thank you. Your comment has been sent.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- FUN -->
+  <section id="fun">
+    <h2 class="page-title">Fun</h2>
+    <p class="page-sub">The things that make living worthwhile.</p>
+    <hr>
+    <div class="fun-layout">
+
+      <!-- Reading -->
+      <div class="fun-col">
+        <div class="fun-col-heading" onclick="toggleFunCol('fc-reading')">
+          <span>Reading</span><span class="fun-col-arrow" id="fc-reading-arrow">&#43;</span>
+        </div>
+        <div class="fun-col-body" id="fc-reading" style="display:none;">
+          <div class="fun-book-item">
+            <div class="fun-book-title">One Hundred Years of Solitude</div>
+            <div class="fun-book-author">Gabriel García Márquez</div>
+            <div class="fun-book-note">The Buendía family, Macondo, and a world where the miraculous is ordinary. One of the great novels ever written.</div>
+          </div>
+          <div class="fun-book-item">
+            <div class="fun-book-title">Stoner</div>
+            <div class="fun-book-author">John Williams</div>
+            <div class="fun-book-note">A quietly devastating novel about an ordinary man and the extraordinary dignity of a life lived for literature. I have not stopped thinking about it.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Film & TV -->
+      <div class="fun-col">
+        <div class="fun-col-heading" onclick="toggleFunCol('fc-ftv')">
+          <span>Film &amp; TV</span><span class="fun-col-arrow" id="fc-ftv-arrow">&#43;</span>
+        </div>
+        <div class="fun-col-body" id="fc-ftv" style="display:none;">
+          <div class="fun-book-item">
+            <div class="fun-ftv-badge">TV Series</div>
+            <div class="fun-book-title">Better Call Saul</div>
+            <div class="fun-book-author">AMC · 2015–2022</div>
+            <div class="fun-book-note">A portrait of a man becoming someone he didn't plan to be.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Listening -->
+      <div class="fun-col">
+        <div class="fun-col-heading" onclick="toggleFunCol('fc-listening')">
+          <span>Listening</span><span class="fun-col-arrow" id="fc-listening-arrow">&#43;</span>
+        </div>
+        <div class="fun-col-body" id="fc-listening" style="display:none;">
+          <div class="fun-book-item">
+            <div class="fun-book-title">Mohit Chauhan</div>
+            <div class="fun-book-note">A voice that aches with longing.</div>
+          </div>
+          <div class="fun-book-item">
+            <div class="fun-book-title">Peter Cat Recording Co.</div>
+            <div class="fun-book-note">Hazy, cinematic, slow-burning.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Curated Writings -->
+      <div class="fun-col">
+        <div class="fun-col-heading" onclick="toggleFunCol('fc-writings')">
+          <span>Curated Writings</span><span class="fun-col-arrow" id="fc-writings-arrow">&#43;</span>
+        </div>
+        <div class="fun-col-body" id="fc-writings" style="display:none;">
+
+          <div class="fun-writing-item" id="fw-marquez">
+            <div class="fun-writing-preview" onclick="toggleFunWriting('fw-marquez')">
+              <div class="fun-writing-type">Nobel Lecture · 1982</div>
+              <div class="fun-book-title">The Solitude of Latin America</div>
+              <div class="fun-book-author">Gabriel García Márquez</div>
+              <div class="fun-writing-hint" id="fw-marquez-hint">Click to read</div>
+            </div>
+            <div class="fun-writing-full" id="fw-marquez-full" style="display:none;">
+              <p class="fun-writing-body">Antonio Pigafetta, a Florentine navigator who went with Magellan on the first voyage around the world, wrote, upon his passage through our southern lands of America, a strictly accurate account that nonetheless resembles a venture into fantasy...</p>
+              <a class="fun-writing-link" href="https://www.nobelprize.org/prizes/literature/1982/marquez/lecture/" target="_blank" rel="noopener">Read full lecture ↗</a>
+            </div>
+          </div>
+
+          <div class="fun-writing-item" id="fw-ramanujan">
+            <div class="fun-writing-preview" onclick="toggleFunWriting('fw-ramanujan')">
+              <div class="fun-writing-type">Letter · 1914</div>
+              <div class="fun-book-title">A Clerk Writes to Cambridge</div>
+              <div class="fun-book-author">S. Ramanujan · To G.H. Hardy</div>
+              <div class="fun-writing-hint" id="fw-ramanujan-hint">Click to read</div>
+            </div>
+            <div class="fun-writing-full" id="fw-ramanujan-full" style="display:none;">
+              <p class="fun-writing-body">I beg to introduce myself to you as a clerk in the Accounts Department of the Port Trust Office at Madras on a salary of only £20 per annum... I have not trodden through the conventional regular course, but I am striking out a new path for myself.</p>
+            </div>
+          </div>
+
+          <div class="fun-writing-item" id="fw-okhil">
+            <div class="fun-writing-preview" onclick="toggleFunWriting('fw-okhil')">
+              <div class="fun-writing-type">Letter · 1909</div>
+              <div class="fun-book-title">The Letter That Put Toilets on Indian Trains</div>
+              <div class="fun-book-author">Okhil Chandra Sen</div>
+              <div class="fun-writing-hint" id="fw-okhil-hint">Click to read</div>
+            </div>
+            <div class="fun-writing-full" id="fw-okhil-full" style="display:none;">
+              <p class="fun-writing-body">Dear Sir, I am arrive by passenger train Ahmedpur station and my belly is too much swelling with jackfruit. I am therefore went to privy. Just I doing the nuisance that guard making whistle blow for train to go off...</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="page-title">Contact</h2>
+    <p class="page-sub">I would love to hear from you. Please don't hesitate to reach out.</p>
+    <form class="contact-form" action="https://formspree.io/f/mojnykbk" method="POST" id="contact-form">
+      <input type="text" name="name" placeholder="Your name" required />
+      <input type="email" name="email" placeholder="Your email" required />
+      <textarea name="message" placeholder="Your message" required></textarea>
+      <button type="submit">Send</button>
+      <p class="form-success" id="form-success">Thank you - I'll write back soon.</p>
+    </form>
+    <hr style="border:none;border-top:1px solid #c8a882;margin:2.5rem 0;">
+    <div class="home-contact-icons" style="justify-content:center;">
+      <a href="/cdn-cgi/l/email-protection#0568647c7077666d6d6a776c7c64456268646c692b666a68" title="Email">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+      <a href="https://x.com/mayur_chhoriya" target="_blank" title="X / Twitter">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.954 4.569a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.691 8.094 4.066 6.13 1.64 3.161a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.061a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.937 4.937 0 004.604 3.417 9.868 9.868 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63a9.936 9.936 0 002.46-2.548l-.047-.02z"/></svg>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<footer>&copy; 2025 Mayur Chhoriya</footer>
+
+<noscript>Please enable JavaScript.</noscript>
+
+<script>
+(function () {
+  var CRIMSON = '#A51C30';
+
+  function showSection(id, push) {
+    if (push === undefined) push = true;
+
+    // Close all open panels before switching section
+    // Musing posts
+    document.querySelectorAll('.musing-body').forEach(function(el) {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('.musing-header').forEach(function(el) {
+      el.classList.remove('open');
+    });
+    // Comment section
+    var cs = document.getElementById('musing-comment-section');
+    if (cs) cs.style.display = 'none';
+    var ct = document.querySelector('.musing-comment-toggle');
+    if (ct) ct.textContent = 'Leave a comment ↓';
+    // Fun columns
+    document.querySelectorAll('.fun-col-body').forEach(function(el) {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('.fun-col-heading').forEach(function(el) {
+      el.classList.remove('open');
+    });
+    // Curated writings expansions
+    document.querySelectorAll('.fun-writing-full').forEach(function(el) {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('[id$="-hint"]').forEach(function(el) {
+      if (el.closest && el.closest('.fun-writing-item')) el.textContent = 'Click to read';
+    });
+
+    document.querySelectorAll('section').forEach(function(s){ s.classList.remove('active'); });
+    document.querySelectorAll('.site-nav li a').forEach(function(a){ a.classList.remove('active'); });
+    var t = document.getElementById(id);
+    if (t) { t.classList.remove('intro-pre-shown'); t.classList.add('active'); }
+    var nav = document.getElementById('nav-' + id);
+    if (nav) nav.classList.add('active');
+    if (push) history.pushState({ section: id }, '', '#' + id);
+  }
+  window.addEventListener('popstate', function(e){
+    showSection((e.state && e.state.section) || 'home', false);
+  });
+  window.showSection = showSection;
+
+  window.toggleMusingComments = function() {
+    var section = document.getElementById('musing-comment-section');
+    var toggle = document.querySelector('.musing-comment-toggle');
+    var isOpen = section.style.display !== 'none';
+    section.style.display = isOpen ? 'none' : 'block';
+    if (toggle) toggle.textContent = isOpen ? 'Leave a comment ↓' : 'Close ↑';
+    // Wire up form submission once opened
+    if (!isOpen) {
+      var form = document.getElementById('musing-comment-form');
+      if (form && !form._bound) {
+        form._bound = true;
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          fetch('https://formspree.io/f/mojnykbk', {
+            method: 'POST', body: new FormData(form), headers: { 'Accept': 'application/json' }
+          }).then(function(r) {
+            if (r.ok) { form.reset(); document.getElementById('musing-comment-success').style.display = 'block'; }
+          });
+        });
+      }
+    }
+  };
+
+  window.toggleMusing = function(id) {
+    var body  = document.getElementById(id);
+    var arrow = document.getElementById(id + '-arrow');
+    var header = arrow ? arrow.closest('.musing-header') : null;
+    var isOpen = body.style.display !== 'none';
+    body.style.display = isOpen ? 'none' : 'block';
+    if (header) header.classList.toggle('open', !isOpen);
+  };
+
+  window.toggleFunCol = function(id) {
+    var body  = document.getElementById(id);
+    var arrow = document.getElementById(id + '-arrow');
+    var heading = arrow ? arrow.closest('.fun-col-heading') : null;
+    var isOpen = body.style.display !== 'none';
+    body.style.display = isOpen ? 'none' : 'block';
+    if (heading) heading.classList.toggle('open', !isOpen);
+  };
+
+  window.toggleFunWriting = function(id) {
+    var full = document.getElementById(id + '-full');
+    var hint = document.getElementById(id + '-hint');
+    var isOpen = full.style.display !== 'none';
+    document.querySelectorAll('.fun-writing-full').forEach(function(el){ el.style.display='none'; });
+    document.querySelectorAll('[id$="-hint"]').forEach(function(el){ if(el.classList && el.classList.contains && el.closest && el.closest('.fun-writing-item')) el.textContent='Click to read'; });
+    if (!isOpen) {
+      full.style.display = 'block';
+      if (hint) hint.textContent = 'Click to close';
+    }
+  };
+
+  window.toggleWriting = function(id) {
+    var full = document.getElementById(id + '-full');
+    var hint = document.querySelector('#' + id + ' .writing-toggle-hint');
+    var isOpen = full.style.display !== 'none';
+    // close all others first
+    document.querySelectorAll('.writing-full').forEach(function(el) {
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('.writing-toggle-hint').forEach(function(el) {
+      el.textContent = 'Click to read';
+    });
+    // toggle the clicked one
+    if (!isOpen) {
+      full.style.display = 'block';
+      hint.textContent = 'Click to close';
+    }
+  };
+
+  /* Contact form */
+  var form = document.getElementById('contact-form');
+  if (form) {
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      fetch('https://formspree.io/f/mojnykbk', {
+        method:'POST', body:new FormData(form), headers:{'Accept':'application/json'}
+      }).then(function(r){
+        if (r.ok) { form.reset(); var m=document.getElementById('form-success'); if(m) m.style.display='block'; }
+      });
+    });
+  }
+
+  /* ── Hero entrance animation (runs after intro) ── */
+  function animateHero() {
+    var delay = 0;
+    function show(id, extraDelay) {
+      setTimeout(function(){
+        var el = document.getElementById(id);
+        if (el) el.classList.add('visible');
+      }, delay + (extraDelay || 0));
+    }
+    show('hero-corner',   0);
+    show('hero-pre',      100);
+    show('hero-name-script', 200);
+    show('hero-line',     600);
+    show('hero-tagline',  700);
+    show('hero-scroll-hint', 900);
+  }
+
+  /* ── Intro animation ── */
+  var overlay   = document.getElementById('intro-overlay');
+  var introName = document.getElementById('intro-name');
+  var siteTitle = document.querySelector('.site-title');
+
+  document.fonts.ready.then(function(){
+    var chars = [];
+    function addChars(str, italic) {
+      var wrap = italic ? document.createElement('em') : null;
+      var dest = wrap || introName;
+      for (var i=0; i<str.length; i++) {
+        if (str[i]===' ') { var sp=document.createElement('span'); sp.className='is'; dest.appendChild(sp); }
+        else { var s=document.createElement('span'); s.className='ic'; s.textContent=str[i]; chars.push(s); dest.appendChild(s); }
+      }
+      if (wrap) introName.appendChild(wrap);
+    }
+    addChars('Mayur', false);
+    addChars(' ', false);
+    addChars('Chhoriya', true);
+
+    function center() {
+      introName.style.left = Math.round((window.innerWidth  - introName.offsetWidth)  / 2) + 'px';
+      introName.style.top  = Math.round((window.innerHeight - introName.offsetHeight) / 2) + 'px';
+    }
+    center();
+
+    var n=chars.length, step=75;
+    chars.forEach(function(c,i){ setTimeout(function(){ c.style.opacity='1'; }, 300+i*step); });
+
+    var t2 = 300 + n*step + 300;
+    setTimeout(function(){ introName.style.transition='color 0.7s ease'; introName.style.color=CRIMSON; }, t2);
+
+    var t3 = t2 + 900;
+    setTimeout(function(){
+      var tr = siteTitle.getBoundingClientRect();
+      introName.style.transition='left 0.85s cubic-bezier(0.76,0,0.24,1),top 0.85s cubic-bezier(0.76,0,0.24,1)';
+      introName.style.left = Math.round(tr.left) + 'px';
+      introName.style.top  = Math.round(tr.top)  + 'px';
+    }, t3);
+
+    var t4 = t3 + 900;
+    setTimeout(function(){
+      siteTitle.style.color = CRIMSON;
+      siteTitle.style.visibility = 'visible';
+      var navHome = document.getElementById('nav-home');
+      if (navHome) navHome.classList.add('active');
+      var homeEl = document.getElementById('home');
+      if (homeEl) {
+        homeEl.classList.remove('intro-pre-shown');
+        homeEl.classList.add('active');
+        homeEl.style.setProperty('animation','none','important');
+      }
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          overlay.style.transition='opacity 1.2s ease';
+          overlay.style.opacity='0';
+          setTimeout(function(){
+            overlay.style.display='none';
+            animateHero();   // ← hero elements animate in after intro fades
+          }, 1300);
+        });
+      });
+    }, t4);
+  });
+})();
+</script>
+</body>
+</html>
