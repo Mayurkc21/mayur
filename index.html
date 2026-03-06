@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script>if(history.scrollRestoration)history.scrollRestoration="manual";window.scrollTo(0,0);document.documentElement.style.overflow="hidden";document.body.style.overflow="hidden";</script>
+  <title>Mayur Chhoriya</title>
+  <meta name="description" content="Mayur Chhoriya — personal corner of the internet." />
+  <meta name="author" content="Mayur Chhoriya" />
+  <meta name="google-site-verification" content="6mkz4weGEWZug-OVoR0KVTC4HdgPWSWBgE6GyKEUi-U" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzMiAzMiI+CiAgPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNiIgZmlsbD0iI0E1MUMzMCIvPgogIDx0ZXh0IHg9IjE2IiB5PSIyNCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsc2VyaWYiIGZvbnQtc2l6ZT0iMjIiIGZvbnQtc3R5bGU9Iml0YWxpYyIgZm9udC13ZWlnaHQ9IjQwMCIgZmlsbD0iI2ZmZiIgdGV4dC1hbmNob3I9Im1pZGRsZSI+TTwvdGV4dD4KPC9zdmc+" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Playfair+Display:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { height:100%; scroll-behavior:auto; }
+    body { min-height:100vh; display:flex; flex-direction:column; }
+    body { background:#fdf9f4; color:#3d3530; font-family:Georgia,"Times New Roman",serif; font-size:18px; line-height:1.8; }
+    a { color:inherit; text-decoration:none; }
+
+    /* ── Header ── */
+    .site-header { max-width:860px; margin:0 auto; padding:3rem 2rem 0.5rem; overflow:hidden; }
+    @media(max-width:640px){ .site-header { padding-top:1.5rem; } }
+    .site-title { font-family:'Homemade Apple',cursive; font-weight:400; font-size:clamp(1.4rem,4.5vw,2.8rem); line-height:1.3; letter-spacing:0.02em; display:block; cursor:pointer; color:#A51C30; visibility:hidden; }
+    .site-title em { font-style:normal; font-weight:400; }
+    .site-flourish { display:block; width:clamp(220px,55vw,330px); margin-top:-1.6rem; opacity:0.88; }
+    .site-flourish svg { width:100%; height:auto; overflow:visible; display:block; }
+
+    /* ── Nav — hamburger ── */
+    .site-nav { display:none; }
+    .hamburger-btn { position:fixed; top:1rem; right:1.4rem; z-index:1000; background:none; border:none; cursor:pointer; padding:0.3rem; display:flex; flex-direction:column; gap:5px; }
+    .hamburger-btn span { display:block; width:22px; height:1.5px; background:#3d3530; transition:background 0.15s; }
+    .hamburger-btn:hover span { background:#A51C30; }
+    .nav-overlay { position:fixed; top:0; right:0; width:220px; height:100vh; background:#fdf9f4; border-left:1px solid #c8a882; z-index:999; transform:translateX(100%); transition:transform 0.3s cubic-bezier(0.76,0,0.24,1); padding:3.2rem 2rem 2rem; display:flex; flex-direction:column; gap:0; }
+    .nav-overlay.closing { transition:none; }
+    .nav-overlay.open { transform:translateX(0); }
+    .nav-overlay a { font-size:0.88rem; color:#3d3530; letter-spacing:0.02em; padding:0.85rem 0; border-bottom:1px solid #e8d8c4; cursor:pointer; transition:color 0.15s; font-family:Georgia,"Times New Roman",serif; }
+    .nav-overlay a:first-child { border-top:1px solid #e8d8c4; }
+    .nav-overlay a:hover, .nav-overlay a.active { color:#A51C30; }
+    .nav-overlay-close { position:absolute; top:0.9rem; right:1.4rem; background:none; border:none; cursor:pointer; font-size:1.1rem; color:#9a7450; transition:color 0.15s; }
+    .nav-overlay-close:hover { color:#A51C30; }
+    .nav-backdrop { position:fixed; inset:0; z-index:998; display:none; }
+    .nav-backdrop.open { display:block; }
+
+    /* ── Content ── */
+    .site-content { max-width:860px; width:100%; margin:0 auto; padding:3rem 2rem 6rem; flex:1; }
+    section { display:none; }
+    section.active { display:block; animation:fadein 0.3s ease both; }
+    @keyframes fadein { from{opacity:0;transform:translateY(4px);} to{opacity:1;transform:translateY(0);} }
+    #home.intro-pre-shown { display:block; animation:none; }
+
+    /* ── Home hero ── */
+    #home { padding:0; }
+    .home-hero {
+      position: relative;
+      width: 100vw;
+      margin-left: max(calc((100vw - 860px) / -2), -2rem);
+      min-height: calc(100vh - 130px);
+      overflow: hidden;
+    }
+    .hero-crimson-bar { position:absolute; top:0; left:0; right:0; height:3px; background:#A51C30; z-index:3; }
+    #scene-canvas { position:absolute; inset:0; width:100%; height:100%; z-index:2; pointer-events:none; }
+    .home-below { padding:3.5rem 0 0; }
+
+    /* ── Page titles ── */
+    h2.page-title { font-family:'Playfair Display',Georgia,serif; font-weight:400; font-size:1.2rem; margin-bottom:1.6rem; letter-spacing:0.01em; color:#A51C30; display:inline-block; border-bottom:1px solid #c8a882; padding-bottom:0.25rem; }
+    #wire h2.page-title, #contact h2.page-title { margin-bottom:0; }
+    .page-sub { display:none; }
+    #wire .page-sub, #contact .page-sub { display:block; color:#9a7450; font-style:italic; font-size:0.85rem; margin-top:0.1rem; margin-bottom:1.6rem; }
+
+    /* ── On the wire ── */
+    .wire-layout { display:flex; flex-direction:column; gap:1.2rem; }
+    .wire-left, .wire-right { user-select:none; }
+    .wire-col-heading { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.18em; color:#7a5c3a; padding:0.45rem 0.75rem; font-weight:normal; display:flex; justify-content:space-between; align-items:center; transition:color 0.15s,background 0.15s; border:1px solid #d8c4a8; background:#faf4ec; margin-bottom:0.2rem; }
+    .wire-left:hover .wire-col-heading, .wire-right:hover .wire-col-heading { color:#A51C30; background:#f5ede0; border-color:#c8a882; }
+    .wire-col-arrow { font-size:0.85rem; color:#c8a882; font-style:normal; transition:transform 0.2s,color 0.15s; display:inline-block; }
+    .wire-col-heading.open .wire-col-arrow { transform:rotate(45deg); color:#A51C30; }
+    .wire-item { padding:1rem 0; }
+    .wire-tag { font-size:0.58rem; text-transform:uppercase; letter-spacing:0.14em; color:#A51C30; margin-bottom:0.4rem; display:block; }
+    .wire-quote { font-size:0.88rem; font-style:italic; line-height:1.85; color:#2a2a2a; margin-bottom:0.7rem; padding-left:0.9rem; border-left:2px solid #A51C30; }
+    .wire-note { font-size:0.80rem; color:#6b4f3a; line-height:1.8; margin-bottom:0.7rem; }
+    .wire-source { display:flex; flex-direction:column; gap:0.1rem; text-decoration:none; cursor:pointer; }
+    .wire-pub { font-size:0.60rem; text-transform:uppercase; letter-spacing:0.14em; color:#b8926a; }
+    .wire-title { font-size:0.76rem; color:#9a7450; border-bottom:1px solid transparent; transition:color 0.15s,border-color 0.15s; display:inline; }
+    .wire-source:hover .wire-title { color:#A51C30; border-bottom-color:#A51C30; }
+    .wire-col-peek { position:relative; overflow:hidden; max-height:5.5rem; }
+    .wire-col-peek::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2.5rem; background:linear-gradient(transparent, #fdf9f4); pointer-events:none; }
+    
+
+    /* ── Blogroll ── */
+    .blogroll-item { padding:0.7rem 0; display:flex; flex-direction:column; gap:0.15rem; }
+    .blogroll-name { font-size:0.9rem; color:#3d3530; border-bottom:1px solid transparent; transition:color 0.15s,border-color 0.15s; display:inline; }
+    .blogroll-name:hover { color:#A51C30; border-bottom-color:#A51C30; }
+    .blogroll-author { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:#9a7450; }
+
+    /* ── Contact ── */
+    .home-contact-icons { display:flex; gap:1.8rem; justify-content:center; align-items:center; }
+    .home-contact-icons a { color:#3d3530; transition:opacity 0.15s; display:flex; align-items:center; }
+    .home-contact-icons a:hover { opacity:0.4; }
+    .home-contact-icons svg { width:28px; height:28px; fill:#2a2a2a; }
+    .contact-form { max-width:420px; margin:2.2rem auto 0; text-align:left; }
+    .contact-form input, .contact-form textarea { width:100%; font-family:Georgia,"Times New Roman",serif; font-size:0.88rem; color:#3d3530; background:#fdf9f4; border:none; border-bottom:1px solid #b8926a; padding:0.55rem 0; outline:none; transition:border-color 0.2s; resize:none; display:block; margin-bottom:1.3rem; }
+    .contact-form input::placeholder, .contact-form textarea::placeholder { color:#b8926a; font-style:italic; }
+    .contact-form input:focus, .contact-form textarea:focus { border-bottom-color:#3d3530; }
+    .contact-form textarea { min-height:80px; }
+    .contact-form button { display:block; margin:0 auto; background:#2a2a2a; color:#fff; font-family:Georgia,"Times New Roman",serif; font-size:0.68rem; font-weight:400; letter-spacing:0.16em; text-transform:uppercase; padding:0.48rem 1.5rem; border:none; cursor:pointer; transition:background 0.15s; }
+    .contact-form button:hover { background:#5a3e28; }
+    .form-success { font-size:0.83rem; color:#9a7450; font-style:italic; text-align:center; margin-top:1rem; display:none; }
+
+    /* ── Fun layout ── */
+    .fun-layout { display:grid; grid-template-columns:1fr 1fr; gap:4rem 2.5rem; }
+    .fun-col { user-select:none; }
+
+    .fun-col-heading { display:flex; justify-content:space-between; align-items:center; padding:0.45rem 0.75rem; font-size:0.62rem; text-transform:uppercase; letter-spacing:0.18em; color:#7a5c3a; font-weight:normal; border:1px solid #d8c4a8; background:#faf4ec; margin-bottom:0.2rem; transition:color 0.15s,background 0.15s; }
+    .fun-col:hover .fun-col-heading { color:#A51C30; background:#f5ede0; border-color:#c8a882; }
+    .fun-col-arrow { font-size:0.85rem; color:#c8a882; font-style:normal; transition:transform 0.2s,color 0.15s; display:inline-block; }
+    .fun-col-heading.open .fun-col-arrow { transform:rotate(45deg); color:#A51C30; }
+    .fun-col-body { padding-bottom:0; }
+    .fun-book-item { padding:0.65rem 0; }
+    .fun-book-title { font-size:0.90rem; font-style:italic; color:#2a2a2a; margin-bottom:0.05rem; }
+    .fun-book-author { font-size:0.63rem; text-transform:uppercase; letter-spacing:0.08em; color:#9a7450; margin-bottom:0.2rem; }
+    .fun-book-note { font-size:0.80rem; color:#3d3530; line-height:1.65; }
+    .fun-ftv-badge { display:inline-block; font-size:0.55rem; text-transform:uppercase; letter-spacing:0.1em; color:#fff; background:#2a2a2a; padding:0.05rem 0.35rem; border-radius:1px; margin-bottom:0.2rem; }
+    .fun-writing-item { }
+    .fun-writing-preview { padding:0.65rem 0 0.3rem; cursor:pointer; transition:opacity 0.15s; }
+    .fun-writing-preview:hover { opacity:0.7; }
+    .fun-writing-type { font-size:0.58rem; text-transform:uppercase; letter-spacing:0.12em; color:#b8926a; margin-bottom:0.15rem; }
+    .fun-writing-hint { font-size:0.6rem; color:#c8a882; font-style:italic; margin-top:0.2rem; }
+    .fun-writing-full { padding:0 0 0.6rem; }
+    .fun-writing-body { font-size:0.80rem; color:#3d3530; line-height:1.75; font-style:italic; margin-bottom:0.35rem; }
+    .fun-writing-link { font-size:0.75rem; color:#9a7450; border-bottom:1px solid #c8a882; padding:0.4rem 0; display:inline-block; text-decoration:none; transition:color 0.15s,border-color 0.15s; cursor:pointer; }
+    .fun-writing-link:hover { color:#A51C30; border-color:#A51C30; }
+    .fun-col-peek { position:relative; overflow:hidden; max-height:4.5rem; cursor:pointer; }
+    .fun-col-peek::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2rem; background:linear-gradient(transparent, #fdf9f4); pointer-events:none; }
+    @media(max-width:640px){ .fun-layout { grid-template-columns:1fr 1fr; gap:3.2rem 1.2rem; } }
+
+    /* ── Musings ── */
+    .musing-post { max-width:620px; border-top:1px solid #e0cdb5; }
+    .musing-title { font-family:'Cormorant Garamond',Georgia,serif; font-weight:300; font-size:1.7rem; font-style:italic; margin-bottom:0.3rem; color:#2a1f1a; }
+    .musing-meta { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.16em; color:#b8926a; margin-bottom:2rem; }
+    .musing-body p { font-size:0.97rem; color:#3d3530; line-height:1.95; margin-bottom:1.3rem; }
+    .musing-subhead { font-family:'Cormorant Garamond',Georgia,serif; font-weight:700; font-size:1.1rem; font-style:normal; color:#2a1f1a; margin:2rem 0 0.8rem; letter-spacing:0.01em; }
+    .musing-figure { margin:2rem 0; }
+    .musing-img { max-width:45%; height:auto; display:block; margin:0 auto; }
+    .musing-img-placeholder { font-size:0.82rem; color:#9a7450; font-style:italic; padding:2rem; border:1px dashed #c8a882; text-align:center; }
+    .musing-caption { font-size:0.72rem; color:#9a7450; font-style:italic; margin-top:0.5rem; letter-spacing:0.02em; text-align:center; }
+    .musing-header { display:flex; justify-content:space-between; align-items:flex-start; cursor:pointer; padding:1rem 0; gap:1.5rem; }
+    .musing-header:hover .musing-title { color:#A51C30; }
+    .musing-toggle-arrow { font-size:0.95rem; color:#c8a882; flex-shrink:0; margin-top:0.3rem; transition:transform 0.2s,color 0.15s; display:inline-block; }
+    .musing-header.open .musing-toggle-arrow { transform:rotate(45deg); color:#A51C30; }
+    .musing-excerpt { font-size:0.88rem; color:#6b4f3a; line-height:1.75; font-style:italic; margin-top:0.4rem; margin-bottom:0; }
+    .musing-body { padding:0 0 1.4rem; }
+    .musing-peek { position:relative; overflow:hidden; max-height:3.5rem; }
+    .musing-peek::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2rem; background:linear-gradient(transparent, #fdf9f4); pointer-events:none; }
+    .musing-comment-toggle { font-size:0.72rem; color:#9a7450; border-bottom:1px solid #c8a882; padding-bottom:1px; cursor:pointer; display:inline-block; margin-top:1.5rem; transition:color 0.15s,border-color 0.15s; }
+    .musing-comment-toggle:hover { color:#A51C30; border-color:#A51C30; }
+    .musing-comment-section { max-width:620px; margin-top:2rem; padding-top:2rem; border-top:1px solid #e0cdb5; }
+    .musing-comment-inner { max-width:420px; }
+    .musing-comment-heading { font-size:0.62rem; text-transform:uppercase; letter-spacing:0.18em; color:#b8926a; margin-bottom:0.4rem; }
+    .musing-comment-sub { font-size:0.78rem; color:#9a7450; font-style:italic; margin-bottom:1.4rem; }
+    .musing-comment-form input, .musing-comment-form textarea { width:100%; font-family:Georgia,"Times New Roman",serif; font-size:0.88rem; color:#3d3530; background:#fdf9f4; border:none; border-bottom:1px solid #b8926a; padding:0.55rem 0; outline:none; transition:border-color 0.2s; resize:none; display:block; margin-bottom:1.1rem; }
+    .musing-comment-form input::placeholder, .musing-comment-form textarea::placeholder { color:#b8926a; font-style:italic; }
+    .musing-comment-form input:focus, .musing-comment-form textarea:focus { border-bottom-color:#3d3530; }
+    .musing-comment-form textarea { min-height:80px; }
+    .musing-comment-form button { display:block; background:#2a2a2a; color:#fff; font-family:Georgia,"Times New Roman",serif; font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; padding:0.48rem 1.5rem; border:none; cursor:pointer; transition:background 0.15s; }
+    .musing-comment-form button:hover { background:#5a3e28; }
+    .musing-comment-success { font-size:0.83rem; color:#9a7450; font-style:italic; margin-top:1rem; display:none; }
+    .musing-link { color:#3d3530; border-bottom:1px solid #c8a882; text-decoration:none; transition:color 0.15s,border-color 0.15s; }
+    .musing-link:hover { color:#A51C30; border-color:#A51C30; }
+
+    footer { max-width:860px; margin:0 auto; padding:1.5rem 2rem; border-top:1px solid #c8a882; font-size:0.73rem; color:#9a7450; }
+
+    /* ── Mobile ── */
+    @media(max-width:640px){
+      .home-hero { margin-left:-1rem; min-height: calc(100vh - 110px); }
+      .site-flourish { margin-top:-1.1rem; width:clamp(160px,60vw,260px); }
+    }
+
+    /* ── Intro overlay ── */
+    #intro-overlay { position:fixed; inset:0; z-index:9999; background:#fdf9f4; opacity:1; pointer-events:none; will-change:opacity; }
+    #intro-name { position:fixed; top:0; left:0; font-family:'Homemade Apple',cursive; font-weight:400; font-size:clamp(1.4rem,4.5vw,2.8rem); line-height:1.3; letter-spacing:0.02em; color:#1c1c1c; white-space:nowrap; width:fit-content; }
+    #intro-name em { font-style:normal; font-weight:400; }
+    .ic { opacity:0; display:inline-block; }
+    .is { display:inline-block; width:0.28em; }
+  </style>
+</head>
+<body>
+
+<div id="intro-overlay"><div id="intro-name"></div></div>
+
+<div class="site-header">
+  <span class="site-title" onclick="showSection('home')">Mayur <em>Chhoriya</em></span>
+  <div class="site-flourish">
+    <svg viewBox="-10 -20 340 80" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-6,36
+               C 8,40 28,46 52,42
+               C 78,38 95,28 118,24
+               C 136,20 148,22 162,18
+               C 180,13 192,4 204,-4
+               C 212,-10 214,-6 210,2
+               C 206,10 218,6 234,8
+               C 248,10 262,4 276,-8
+               C 284,-16 283,-6 288,8"
+            stroke="#b8926a" stroke-width="1.4" fill="none"
+            stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  </div>
+</div>
+
+<button class="hamburger-btn" onclick="toggleNav()" aria-label="Menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="nav-backdrop" id="nav-backdrop" onclick="closeNav()"></div>
+<nav class="nav-overlay" id="nav-overlay">
+  <button class="nav-overlay-close" onclick="closeNav()">✕</button>
+  <a id="nav-home" class="active" onclick="showSection('home');closeNav(true)">Home</a>
+  <a id="nav-musings" onclick="showSection('musings');closeNav(true)">Musings</a>
+  <a id="nav-fun" onclick="showSection('fun');closeNav(true)">Fun</a>
+  <a id="nav-wire" onclick="showSection('wire');closeNav(true)">On the wire</a>
+  <a id="nav-blogs" onclick="showSection('blogs');closeNav(true)">Blogs I follow</a>
+  <a id="nav-contact" onclick="showSection('contact');closeNav(true)">Contact</a>
+</nav>
+
+<div class="site-content">
+
+  <!-- HOME -->
+  <section id="home" class="intro-pre-shown">
+    <div class="home-hero">
+      <canvas id="scene-canvas"></canvas>
+    </div>
+    <div class="home-below"></div>
+  </section>
+
+  <!-- ON THE WIRE — exact original layout from reference -->
+  <section id="wire">
+    <h2 class="page-title">On the wire</h2>
+    <p class="page-sub">Politics, history, technology and culture.</p>
+    <div class="wire-layout">
+
+      <div class="wire-left">
+        <div class="wire-col-body" id="wc-worth">
+          <div class="wire-item">
+            <span class="wire-tag">Politics · Middle East</span>
+            <div class="wire-quote">"War alters political psychology in ways that are rarely linear. Those who loathe the clerical establishment may still recoil at foreign jets in Iranian skies... Wars of choice rarely confine themselves to their intended targets. They consume not only the combatants but the assumptions that animate them."</div>
+            <a class="wire-source" href="https://www.lrb.co.uk/blog/2026/march/the-dry-and-the-wet-burn-together" target="_blank" rel="noopener" onclick="event.stopPropagation()">
+              <span class="wire-pub">London Review of Books</span>
+              <span class="wire-title">The Dry and the Wet Burn Together ↗</span>
+            </a>
+          </div>
+
+  
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <!-- MUSINGS -->
+  <section id="musings">
+    <h2 class="page-title">Musings</h2>
+    <p class="page-sub">Essays, half-thoughts, and things I couldn't stop thinking about.</p>
+    <p style="color:#9a7450; font-style:italic; font-size:0.92rem;">Blog coming soon.</p>
+  </section>
+
+  <!-- BLOGS -->
+  <section id="blogs">
+    <h2 class="page-title">Blogs I follow</h2>
+    <p class="page-sub">Writing worth returning to.</p>
+    <div class="blogroll-item">
+      <div class="blogroll-name"><a href="https://indconlawphil.wordpress.com" target="_blank" rel="noopener" style="color:#3d3530;transition:color 0.15s;">Indian Constitutional Law and Philosophy</a></div>
+      <div class="blogroll-author">Gautam Bhatia</div>
+    </div>
+  </section>
+
+  <!-- FUN — exact original layout -->
+  <section id="fun">
+    <h2 class="page-title">Fun</h2>
+    <p class="page-sub">The things that make living worthwhile.</p>
+    <div class="fun-layout">
+
+      <div class="fun-col">
+        <div class="fun-col-heading" onclick="toggleFunCol('fc-reading')" style="cursor:pointer;">
+          <span>Reading</span><span class="fun-col-arrow" id="fc-reading-arrow">&#43;</span>
+        </div>
+        <div class="fun-col-peek" id="fc-reading-peek">
+        <div class="fun-col-body" id="fc-reading">
+          <div class="fun-book-item">
+            <div class="fun-book-title">One Hundred Years of Solitude</div>
+            <div class="fun-book-author">Gabriel García Márquez</div>
+            <div class="fun-book-note">The Buendía family, Macondo, and a world where the miraculous is ordinary. One of the great novels ever written.</div>
+          </div>
+          <div class="fun-book-item">
+            <div class="fun-book-title">Stoner</div>
+            <div class="fun-book-author">John Williams</div>
+            <div class="fun-book-note">A quietly devastating novel about an ordinary man and the extraordinary dignity of a life lived for literature. I have not stopped thinking about it.</div>
+          </div>
+        </div>
+        </div><!-- /peek -->
+      </div>
+
+      <div class="fun-col">
+        <div class="fun-col-heading" onclick="toggleFunCol('fc-ftv')" style="cursor:pointer;">
+          <span>Film &amp; TV</span><span class="fun-col-arrow" id="fc-ftv-arrow">&#43;</span>
+        </div>
+        <div class="fun-col-peek" id="fc-ftv-peek">
+        <div class="fun-col-body" id="fc-ftv">
+          <div class="fun-book-item">
+            <div class="fun-ftv-badge">TV Series</div>
+            <div class="fun-book-title">Better Call Saul</div>
+            <div class="fun-book-author">AMC · 2015–2022</div>
+            <div class="fun-book-note">A portrait of a man becoming someone he didn't plan to be.</div>
+          </div>
+        </div>
+        </div><!-- /peek -->
+      </div>
+
+      <div class="fun-col">
+        <div class="fun-col-heading" onclick="toggleFunCol('fc-writings')" style="cursor:pointer;">
+          <span>Curated Writings</span><span class="fun-col-arrow" id="fc-writings-arrow">&#43;</span>
+        </div>
+        <div class="fun-col-peek" id="fc-writings-peek">
+        <div class="fun-col-body" id="fc-writings">
+
+          <div class="fun-writing-item" id="fw-gandhi">
+            <div class="fun-writing-preview" onclick="toggleFunWriting('fw-gandhi')" style="cursor:pointer;">
+              <div class="fun-writing-type">Speech · 8 August 1942</div>
+              <div class="fun-book-title">Quit India</div>
+              <div class="fun-book-author">Mahatma Gandhi</div>
+              <div class="fun-writing-hint" id="fw-gandhi-hint">Click to read</div>
+            </div>
+            <div class="fun-writing-full" id="fw-gandhi-full" style="display:none;">
+              <p class="fun-writing-body">The night before mass arrests, Gandhi addressed the Congress and gave India its battle cry — Do or Die.</p>
+              <a class="fun-writing-link" href="https://www.mkgandhi.org/speeches/qui.php" target="_blank" rel="noopener">Read full speech ↗</a>
+            </div>
+          </div>
+
+          <div class="fun-writing-item" id="fw-woolf">
+            <div class="fun-writing-preview" onclick="toggleFunWriting('fw-woolf')" style="cursor:pointer;">
+              <div class="fun-writing-type">Essay · 1932</div>
+              <div class="fun-book-title">A Letter to a Young Poet</div>
+              <div class="fun-book-author">Virginia Woolf</div>
+              <div class="fun-writing-hint" id="fw-woolf-hint">Click to read</div>
+            </div>
+            <div class="fun-writing-full" id="fw-woolf-full" style="display:none;">
+              <a class="fun-writing-link" href="https://www.fullmoon.blue/a-letter-to-a-young-poet-virginia-woolf/" target="_blank" rel="noopener">Read full letter ↗</a>
+            </div>
+          </div>
+
+          <div class="fun-writing-item" id="fw-marquez">
+            <div class="fun-writing-preview" onclick="toggleFunWriting('fw-marquez')" style="cursor:pointer;">
+              <div class="fun-writing-type">Nobel Lecture · 1982</div>
+              <div class="fun-book-title">The Solitude of Latin America</div>
+              <div class="fun-book-author">Gabriel García Márquez</div>
+              <div class="fun-writing-hint" id="fw-marquez-hint">Click to read</div>
+            </div>
+            <div class="fun-writing-full" id="fw-marquez-full" style="display:none;">
+              <a class="fun-writing-link" href="https://www.nobelprize.org/prizes/literature/1982/marquez/lecture/" target="_blank" rel="noopener">Read full lecture ↗</a>
+            </div>
+          </div>
+
+
+
+
+        </div>
+        </div><!-- /peek -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <h2 class="page-title">Contact</h2>
+    <p class="page-sub">I would love to hear from you. Please don't hesitate to reach out.</p>
+    <form class="contact-form" action="https://formspree.io/f/mojnykbk" method="POST" id="contact-form">
+      <input type="text" name="name" placeholder="Your name" required />
+      <input type="email" name="email" placeholder="Your email" required />
+      <textarea name="message" placeholder="Your message" required></textarea>
+      <button type="submit">Send</button>
+      <p class="form-success" id="form-success">Thank you — I'll write back soon.</p>
+    </form>
+    <div class="home-contact-icons" style="justify-content:center; margin-top:5.5rem;">
+      <a href="/cdn-cgi/l/email-protection#0568647c7077666d6d6a776c7c64456268646c692b666a68" title="Email">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+      </a>
+      <a href="https://x.com/mayur_chhoriya" target="_blank" title="X / Twitter">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M23.954 4.569a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.691 8.094 4.066 6.13 1.64 3.161a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.061a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.937 4.937 0 004.604 3.417 9.868 9.868 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.054 0 13.999-7.496 13.999-13.986 0-.209 0-.42-.015-.63a9.936 9.936 0 002.46-2.548l-.047-.02z"/></svg>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<footer>&copy; 2025 Mayur Chhoriya</footer>
+<noscript>Please enable JavaScript.</noscript>
+
+<script>
+(function () {
+  /* Force scroll to top on every load */
+  window.scrollTo(0, 0);
+  if (history.scrollRestoration) history.scrollRestoration = "manual";
+  var CRIMSON = '#A51C30';
+
+  /* ── Section routing ── */
+  function toggleNav() {
+    document.getElementById('nav-overlay').classList.toggle('open');
+    document.getElementById('nav-backdrop').classList.toggle('open');
+  }
+  window.closeNav = function(instant) {
+    var overlay = document.getElementById('nav-overlay');
+    var backdrop = document.getElementById('nav-backdrop');
+    if (instant) { overlay.classList.add('closing'); }
+    overlay.classList.remove('open');
+    backdrop.classList.remove('open');
+    if (instant) { requestAnimationFrame(function(){ overlay.classList.remove('closing'); }); }
+  };
+  window.toggleNav = toggleNav;
+
+  function showSection(id, push) {
+    if (push === undefined) push = true;
+    /* Always close nav immediately */
+    var ov = document.getElementById('nav-overlay');
+    var bd = document.getElementById('nav-backdrop');
+    if (ov) { ov.style.transition='none'; ov.classList.remove('open'); setTimeout(function(){ ov.style.transition=''; },50); }
+    if (bd) bd.classList.remove('open');
+    document.querySelectorAll('.musing-body').forEach(function(el){ el.style.display='none'; });
+    document.querySelectorAll('.musing-header').forEach(function(el){ el.classList.remove('open'); });
+    var cs = document.getElementById('musing-comment-section');
+    if (cs) cs.style.display = 'none';
+    var ct = document.querySelector('.musing-comment-toggle');
+    if (ct) ct.textContent = 'Leave a comment ↓';
+    document.querySelectorAll('.fun-col-peek,.wire-col-peek').forEach(function(el){});
+    document.querySelectorAll('[id$="-peek"]').forEach(function(el){
+      if (el.id.indexOf('fc-') === 0) el.classList.add('fun-col-peek');
+      if (el.id.indexOf('wc-') === 0) el.classList.add('wire-col-peek');
+    });
+    document.querySelectorAll('.fun-col-heading').forEach(function(el){ el.classList.remove('open'); });
+    document.querySelectorAll('.wire-col-heading').forEach(function(el){ el.classList.remove('open'); });
+    document.querySelectorAll('.fun-writing-full').forEach(function(el){ el.style.display='none'; });
+    document.querySelectorAll('[id$="-hint"]').forEach(function(el){
+      if (el.closest && el.closest('.fun-writing-item')) el.textContent='Click to read';
+    });
+    document.querySelectorAll('section').forEach(function(s){ s.classList.remove('active'); });
+    document.querySelectorAll('.site-nav li a').forEach(function(a){ a.classList.remove('active'); });
+    var t = document.getElementById(id);
+    if (t) { t.classList.remove('intro-pre-shown'); t.classList.add('active'); }
+    var nav = document.getElementById('nav-' + id);
+    if (nav) nav.classList.add('active');
+    if (push) history.pushState({ section: id }, '', '#' + id);
+  }
+  window.addEventListener('popstate', function(e){ showSection((e.state && e.state.section) || 'home', false); });
+  window.showSection = showSection;
+
+  window.toggleMusing = function(id) {
+    var body = document.getElementById(id);
+    var arrow = document.getElementById(id + '-arrow');
+    var header = arrow ? arrow.closest('.musing-header') : null;
+    var isOpen = body.style.display !== 'none';
+    body.style.display = isOpen ? 'none' : 'block';
+    if (header) header.classList.toggle('open', !isOpen);
+  };
+
+  window.toggleMusingComments = function() {
+    var section = document.getElementById('musing-comment-section');
+    var toggle = document.querySelector('.musing-comment-toggle');
+    var isOpen = section.style.display !== 'none';
+    section.style.display = isOpen ? 'none' : 'block';
+    if (toggle) toggle.textContent = isOpen ? 'Leave a comment ↓' : 'Close ↑';
+    if (!isOpen) {
+      var form = document.getElementById('musing-comment-form');
+      if (form && !form._bound) {
+        form._bound = true;
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          fetch('https://formspree.io/f/mojnykbk', {
+            method:'POST', body:new FormData(form), headers:{'Accept':'application/json'}
+          }).then(function(r){ if(r.ok){ form.reset(); document.getElementById('musing-comment-success').style.display='block'; } });
+        });
+      }
+    }
+  };
+
+  window.toggleFunCol = function(id) {
+    var peek = document.getElementById(id + '-peek');
+    var arrow = document.getElementById(id + '-arrow');
+    var heading = arrow ? arrow.closest('.fun-col-heading') : null;
+    if (!peek) return;
+    var isOpen = !peek.classList.contains('fun-col-peek');
+    if (isOpen) {
+      /* close it */
+      peek.classList.add('fun-col-peek');
+      if (heading) heading.classList.remove('open');
+    } else {
+      /* open it */
+      peek.classList.remove('fun-col-peek');
+      if (heading) heading.classList.add('open');
+    }
+  };
+
+  window.toggleWireCol = function(id) {
+    var body = document.getElementById(id);
+    var peek = document.getElementById(id + '-peek');
+    var arrow = document.getElementById(id + '-arrow');
+    var heading = arrow ? arrow.closest('.wire-col-heading') : null;
+    var isOpen = peek ? !peek.classList.contains('wire-col-peek') : body.style.display !== 'none';
+    if (peek) {
+      peek.classList.toggle('wire-col-peek', isOpen); /* add peek back when closing */
+    }
+    if (heading) heading.classList.toggle('open', !isOpen);
+  };
+
+  window.toggleFunWriting = function(id) {
+    var full = document.getElementById(id + '-full');
+    var hint = document.getElementById(id + '-hint');
+    if (!full) return;
+    var isOpen = full.style.display === 'block';
+    /* close all others first */
+    document.querySelectorAll('.fun-writing-full').forEach(function(el){ el.style.display = 'none'; });
+    document.querySelectorAll('.fun-writing-hint').forEach(function(el){ el.textContent = 'Click to read'; });
+    if (!isOpen) {
+      full.style.display = 'block';
+      if (hint) hint.textContent = 'Click to close';
+    }
+  };
+
+  /* Wire up peek divs to open on click, but not when already open */
+  document.querySelectorAll('.fun-col-peek').forEach(function(peek) {
+    var id = peek.id.replace('-peek','');
+    peek.addEventListener('click', function(e) {
+      /* only fire if still in peek (closed) state */
+      if (peek.classList.contains('fun-col-peek')) {
+        window.toggleFunCol(id);
+      }
+    });
+  });
+
+  /* Contact form */
+  var cform = document.getElementById('contact-form');
+  if (cform) {
+    cform.addEventListener('submit', function(e){
+      e.preventDefault();
+      fetch('https://formspree.io/f/mojnykbk', {
+        method:'POST', body:new FormData(cform), headers:{'Accept':'application/json'}
+      }).then(function(r){
+        if(r.ok){ cform.reset(); var m=document.getElementById('form-success'); if(m) m.style.display='block'; }
+      });
+    });
+  }
+
+
+  /* ══════════════════════════════════════
+     BOY & BALL — pure keyframe animation
+     NO physics. Ball follows exact bezier
+     arcs through pre-defined waypoints.
+
+     STRICT PATH every throw:
+       P0 (hand) → arc → P1 (floor bounce)
+       → arc → P2 (wall face)
+       → arc → P3 (floor bounce)
+       → arc → P0 (hand, caught)
+
+     Each arc is a quadratic bezier with
+     a control point that makes it peak
+     naturally. t goes 0→1 per segment.
+  ══════════════════════════════════════ */
+  (function () {
+    var canvas, ctx, W, H, raf, tick = 0;
+
+    /* Warm light aesthetic palette */
+    var SKIN    = '#e8b88a';
+    var SKIN_SH = '#c9906a';
+    var HAIR    = '#2c1a0e';
+    var SHIRT   = '#e8d5b0';   /* linen cream */
+    var SHIRT_SH= '#d4bb8a';
+    var PANTS   = '#c8b090';   /* warm sand */
+    var PANTS_SH= '#b09870';
+    var SHOE    = '#7a5538';
+    var BALL_C  = '#A51C30';
+    var BALL_LT = '#c43050';
+    var BALL_DK = '#7a1020';
+    var DUST_C  = 'rgba(180,148,100,0.6)';
+
+    /* Layout anchors — computed in resize() */
+    var BOY_X, FLOOR_Y, WALL_X;
+    var boy = { x: 0 };
+
+    /* Ball rendering state */
+    var bx = 0, by = 0, bspin = 0;
+    var BALL_R = 9;
+    var SCALE = 1; /* drawing scale factor for mobile */
+    var trail = [], dusts = [];
+
+    /* Animation state */
+    /* seg: which bezier segment we're on (0-3) */
+    /* t:   progress through current segment 0→1 */
+    var seg = -1;   /* -1 = idle */
+    var t   = 0;
+    var SEG_DUR = [38, 30, 30, 34]; /* frames per segment — rebuilt each throw */
+    var throwing = false, throwTick = 0;
+    var idleTimer = 0, idleWait = 20;
+
+    /* Bezier waypoints for current throw:
+       P0=hand, P1=floor1, P2=wall, P3=floor2, P4=hand(catch)
+       Each segment has one quadratic control point C */
+    var P = [], C = [];
+
+    function resize() {
+      var hero = document.querySelector('.home-hero');
+      if (!hero) return;
+      W = hero.offsetWidth;
+      H = hero.offsetHeight;
+      canvas.width  = W;
+      canvas.height = H;
+      FLOOR_Y = H * 0.68;
+
+      /* Scale everything for mobile */
+      var isMobile = W < 640;
+      SCALE  = isMobile ? 0.62 : 1;
+      BALL_R = isMobile ? 6 : 9;
+
+      /* Align wall right edge with the left edge of the "Home" nav link */
+      var heroRect = hero.getBoundingClientRect();
+      /* Content area left edge = (viewport - 860px) / 2 + 32px padding */
+      var contentLeft = Math.max(0, (window.innerWidth - 860) / 2) + 32;
+      var contentLeftInHero = contentLeft - heroRect.left;
+      WALL_X = contentLeftInHero * 0.5;
+
+      /* On mobile place boy closer to centre so he fits */
+      BOY_X = isMobile ? W * 0.72 : W * 0.64;
+      boy.x = BOY_X;
+      if (seg === -1) { bx = handX(); by = handY(); }
+    }
+
+    function handX() { return BOY_X - Math.round(36 * SCALE); }
+    function handY() { return FLOOR_Y - Math.round(54 * SCALE) + Math.sin(tick * 0.025) * 1.5; }
+
+    /* Quadratic bezier point */
+    function qbez(ax, ay, cx, cy, ex, ey, t) {
+      var mt = 1 - t;
+      return {
+        x: mt*mt*ax + 2*mt*t*cx + t*t*ex,
+        y: mt*mt*ay + 2*mt*t*cy + t*t*ey
+      };
+    }
+
+    function buildKeypoints() {
+      /* Vary trajectory timing each throw */
+      var spd = 0.75 + Math.random() * 0.55; /* 0.75–1.3× speed multiplier */
+      SEG_DUR[0] = Math.round((28 + Math.random() * 20) / spd); /* throw arc */
+      SEG_DUR[1] = Math.round((22 + Math.random() * 18) / spd); /* up to wall */
+      SEG_DUR[2] = Math.round((20 + Math.random() * 16) / spd); /* wall to floor */
+      SEG_DUR[3] = Math.round((24 + Math.random() * 18) / spd); /* return to hand */
+
+      /* P0: hand */
+      P[0] = { x: handX(), y: handY() };
+
+      /* P1: floor bounce — between wall and boy, closer to midpoint */
+      var midX = WALL_X + (BOY_X - WALL_X) * (0.25 + Math.random() * 0.40);
+      P[1] = { x: midX, y: FLOOR_Y - BALL_R };
+
+      /* P2: wall face — random height on wall */
+      /* Wall hit: clamp so ball never hits above 15% from top */
+      var wallHitRaw = FLOOR_Y * (0.28 + Math.random() * 0.28);
+      P[2] = { x: WALL_X + BALL_R, y: Math.max(H * 0.15, wallHitRaw) };
+
+      /* P3: floor bounce on return — closer to wall */
+      var retX = WALL_X + (BOY_X - WALL_X) * (0.15 + Math.random() * 0.35);
+      P[3] = { x: retX, y: FLOOR_Y - BALL_R };
+
+      /* P4: hand (catch) */
+      P[4] = { x: handX(), y: handY() };
+
+      /* Control points — placed so arcs peak naturally
+         Arc 0: hand→floor1 — control above midpoint (like a throw arc)
+         Arc 1: floor1→wall — control up-left (bouncing up to wall)
+         Arc 2: wall→floor2 — control right of wall, low (bounces off)
+         Arc 3: floor2→hand — control up-right (bouncing back to boy)  */
+
+      /* ── Physics via bezier peak inversion ──
+         Formula: C = 2*peak - 0.5*(P0+P1)
+         This guarantees the curve passes through `peak` at t=0.5.
+
+         Sequence:
+           Seg 0  hand → P1(floor)   : gentle downward arc (throw)
+           Seg 1  P1(floor) → P2(wall): high bounce up to wall
+           Seg 2  P2(wall) → P3(floor): drops down after wall deflect
+           Seg 3  P3(floor) → P4(hand): moderate return bounce
+      */
+
+      /* Seg 0 peak: slightly BELOW the hand, on the way down to floor.
+         The ball starts at hand height and arcs gently downward —
+         peak is just a little below the hand (no upward arc at all). */
+      var peak0x = P[0].x + (P[1].x - P[0].x) * 0.45;
+      var peak0y = P[0].y + (P[1].y - P[0].y) * 0.25;  /* 25% of way to floor */
+      C[0] = { x: 2*peak0x - 0.5*(P[0].x+P[1].x),
+               y: 2*peak0y - 0.5*(P[0].y+P[1].y) };
+
+      /* Safe top boundary — ball must never go above this */
+      var MIN_Y = BALL_R + 20;
+
+      /* Seg 1 peak: HIGH above both floor point and wall hit point. */
+      var wallHitH = P[2].y;
+      var peak1y   = Math.max(MIN_Y, wallHitH - H * (0.15 + Math.random() * 0.12));
+      var peak1x   = (P[1].x + P[2].x) * 0.5;
+      var cy1 = 2*peak1y - 0.5*(P[1].y+P[2].y);
+      C[1] = { x: 2*peak1x - 0.5*(P[1].x+P[2].x),
+               y: Math.max(MIN_Y, cy1) };
+
+      /* Seg 2 peak: low — ball barely rises after wall, drops to floor. */
+      var peak2x = P[2].x + (P[3].x - P[2].x) * 0.3;
+      var peak2y = Math.max(MIN_Y, P[2].y - H * 0.03);
+      var cy2 = 2*peak2y - 0.5*(P[2].y+P[3].y);
+      C[2] = { x: 2*peak2x - 0.5*(P[2].x+P[3].x),
+               y: Math.max(MIN_Y, cy2) };
+
+      /* Seg 3 peak: moderate return arc. */
+      var peak3x = (P[3].x + P[4].x) * 0.5;
+      var peak3y = Math.max(MIN_Y, Math.min(P[3].y, P[4].y) - H * (0.08 + Math.random() * 0.12));
+      C[3] = { x: 2*peak3x - 0.5*(P[3].x+P[4].x),
+               y: Math.max(BALL_R + 20, 2*peak3y - 0.5*(P[3].y+P[4].y)) };
+    }
+
+    function startThrow() {
+      buildKeypoints();
+      bx = P[0].x; by = P[0].y; bspin = 0;
+      seg = 0; t = 0;
+      throwing = true; throwTick = 0;
+      trail = [];
+    }
+
+    function spawnDust(x, y) {
+      for (var i = 0; i < 7; i++) {
+        dusts.push({
+          x: x + (Math.random() - 0.5) * 10,
+          y: y,
+          vx: (Math.random() - 0.5) * 2.2,
+          vy: -(0.4 + Math.random() * 1.6),
+          life: 1,
+          r: 1.4 + Math.random() * 2.4
+        });
+      }
+    }
+
+    function update() {
+      tick++;
+
+      if (throwing) {
+        throwTick++;
+        if (throwTick > 20) { throwing = false; throwTick = 0; }
+      }
+
+      if (seg === -1) {
+        /* idle — ball sits in hand */
+        bx = handX(); by = handY();
+        idleTimer++;
+        if (idleTimer >= idleWait) {
+          idleTimer = 0;
+          idleWait = 20 + Math.floor(Math.random() * 40);
+          startThrow();
+        }
+      } else {
+        /* advance t */
+        var dur = SEG_DUR[seg];
+        t += 1 / dur;
+
+        if (t >= 1) {
+          /* snap exactly to end of segment */
+          t = 1;
+          var pos = qbez(P[seg].x, P[seg].y, C[seg].x, C[seg].y, P[seg+1].x, P[seg+1].y, 1);
+          bx = pos.x; by = pos.y;
+
+          /* Spawn dust at bounces */
+          if (seg === 0 || seg === 2) spawnDust(bx, FLOOR_Y); /* floor bounces */
+          if (seg === 1) spawnDust(WALL_X, by);      /* wall hit */
+
+          seg++;
+          t = 0;
+
+          if (seg > 3) {
+            /* caught — back to idle */
+            seg = -1; t = 0;
+            bx = handX(); by = handY();
+            trail = [];
+          }
+        } else {
+          var s = seg;
+          var pos2 = qbez(P[s].x, P[s].y, C[s].x, C[s].y, P[s+1].x, P[s+1].y, t);
+          bx = pos2.x; by = pos2.y;
+        }
+
+        /* spin based on horizontal movement */
+        var prevX = bx;
+        bspin += (seg <= 1 ? -0.06 : 0.06);
+
+        /* trail */
+        trail.push({ x: bx, y: by, a: 1 });
+        if (trail.length > 18) trail.shift();
+      }
+
+      /* decay trail */
+      for (var i = trail.length - 1; i >= 0; i--) {
+        trail[i].a -= 0.07;
+        if (trail[i].a <= 0) trail.splice(i, 1);
+      }
+      /* decay dust */
+      for (var d = dusts.length - 1; d >= 0; d--) {
+        var p = dusts[d];
+        p.x += p.vx; p.y += p.vy; p.vy += 0.07; p.vx *= 0.88; p.life -= 0.055;
+        if (p.life <= 0) dusts.splice(d, 1);
+      }
+    }
+
+    /* ── Draw ── */
+
+    function drawScene() {
+      /* Floor */
+      ctx.strokeStyle = 'rgba(100,75,50,0.1)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(0, FLOOR_Y); ctx.lineTo(W, FLOOR_Y); ctx.stroke();
+
+      var fg = ctx.createLinearGradient(0, FLOOR_Y, 0, FLOOR_Y + 90);
+      fg.addColorStop(0, 'rgba(200,175,140,0.14)');
+      fg.addColorStop(1, 'rgba(200,175,140,0)');
+      ctx.fillStyle = fg; ctx.fillRect(0, FLOOR_Y, W, 90);
+
+      /* ── Wall — light warm shading, left edge to WALL_X, top to FLOOR_Y only ── */
+      var wallRight = WALL_X;
+      /* Gradient: lightest at far left, slightly warmer/deeper at the right face */
+      var wg = ctx.createLinearGradient(0, 0, wallRight, 0);
+      wg.addColorStop(0,   '#f5eedd');  /* lightest at far left edge */
+      wg.addColorStop(0.5, '#ede0c4');
+      wg.addColorStop(1,   '#e2d0aa');  /* slightly deeper at the face (right edge) */
+      ctx.fillStyle = wg;
+      ctx.fillRect(0, 0, wallRight, FLOOR_Y);
+      /* Crisp face edge */
+      ctx.strokeStyle = 'rgba(160,130,85,0.35)';
+      ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(wallRight, 0); ctx.lineTo(wallRight, FLOOR_Y); ctx.stroke();
+
+      /* Boy floor shadow */
+      ctx.save(); ctx.globalAlpha = 0.07; ctx.fillStyle = '#2c1a0e';
+      ctx.beginPath(); ctx.ellipse(BOY_X + 4, FLOOR_Y + 3, 50, 9, 0, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+
+    function drawBall() {
+      /* Don't draw floating ball when it's held in the hand */
+      if (seg === -1 || (seg === 0 && t < 0.12)) return;
+      /* trail */
+      for (var i = 0; i < trail.length; i++) {
+        ctx.save();
+        ctx.globalAlpha = trail[i].a * 0.10;
+        ctx.fillStyle = BALL_C;
+        ctx.beginPath();
+        ctx.arc(trail[i].x, trail[i].y, BALL_R * (i / trail.length) * 0.7, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      }
+      /* ground shadow */
+      var ht = Math.max(0, FLOOR_Y - by);
+      var sc = Math.max(0.05, 1 - ht / (H * 0.5));
+      ctx.save(); ctx.globalAlpha = 0.10 * sc; ctx.fillStyle = '#5a3820';
+      ctx.beginPath(); ctx.ellipse(bx, FLOOR_Y + 1, BALL_R * 1.7, BALL_R * 0.35, 0, 0, Math.PI*2); ctx.fill(); ctx.restore();
+      /* ball */
+      ctx.save(); ctx.translate(bx, by); ctx.rotate(bspin);
+      var g = ctx.createRadialGradient(-BALL_R*.32, -BALL_R*.36, BALL_R*.07, 0, 0, BALL_R*1.04);
+      g.addColorStop(0, BALL_LT); g.addColorStop(0.5, BALL_C); g.addColorStop(1, BALL_DK);
+      ctx.fillStyle = g;
+      ctx.beginPath(); ctx.arc(0, 0, BALL_R, 0, Math.PI*2); ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.11)'; ctx.lineWidth = 1.2;
+      ctx.beginPath(); ctx.arc(0, 0, BALL_R*.6, -.5, Math.PI+.5); ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.28)';
+      ctx.beginPath(); ctx.arc(-BALL_R*.3, -BALL_R*.32, BALL_R*.25, 0, Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+
+    function drawDust() {
+      for (var d = 0; d < dusts.length; d++) {
+        var p = dusts[d];
+        ctx.save(); ctx.globalAlpha = p.life * 0.45; ctx.fillStyle = DUST_C;
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI*2); ctx.fill(); ctx.restore();
+      }
+    }
+
+    function rr(x, y, w, h, r) {
+      ctx.beginPath();
+      ctx.moveTo(x+r, y); ctx.lineTo(x+w-r, y); ctx.quadraticCurveTo(x+w, y, x+w, y+r);
+      ctx.lineTo(x+w, y+h-r); ctx.quadraticCurveTo(x+w, y+h, x+w-r, y+h);
+      ctx.lineTo(x+r, y+h); ctx.quadraticCurveTo(x, y+h, x, y+h-r);
+      ctx.lineTo(x, y+r); ctx.quadraticCurveTo(x, y, x+r, y); ctx.closePath();
+    }
+
+    function drawBoy() {
+      var bx_ = BOY_X, by_ = FLOOR_Y;
+      /* Scale the boy around his base position for mobile */
+      ctx.save();
+      ctx.translate(bx_, by_);
+      ctx.scale(SCALE, SCALE);
+      ctx.translate(-bx_, -by_);
+      var breathe   = Math.sin(tick * .022) * 1.2;
+      var torsoBase = by_ - 2;
+      var torsoTop  = torsoBase - 46 + breathe;
+      var headCy    = torsoTop - 17 + breathe * .4;
+      ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+
+      /* Legs */
+      ctx.strokeStyle = PANTS_SH; ctx.lineWidth = 14;
+      ctx.beginPath(); ctx.moveTo(bx_-3, torsoBase); ctx.quadraticCurveTo(bx_-26, torsoBase+9, bx_-44, torsoBase+3); ctx.stroke();
+      ctx.lineWidth = 12;
+      ctx.beginPath(); ctx.moveTo(bx_-44, torsoBase+3); ctx.quadraticCurveTo(bx_-47, torsoBase+15, bx_-41, torsoBase+1); ctx.stroke();
+      ctx.strokeStyle = PANTS; ctx.lineWidth = 14;
+      ctx.beginPath(); ctx.moveTo(bx_+3, torsoBase); ctx.quadraticCurveTo(bx_-18, torsoBase+11, bx_-38, torsoBase+5); ctx.stroke();
+      ctx.lineWidth = 12;
+      ctx.beginPath(); ctx.moveTo(bx_-38, torsoBase+5); ctx.quadraticCurveTo(bx_-41, torsoBase+17, bx_-35, torsoBase+3); ctx.stroke();
+      /* Ankle */
+      ctx.strokeStyle = '#f0e4cc'; ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(bx_-43, torsoBase+1); ctx.lineTo(bx_-41, torsoBase-1); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(bx_-37, torsoBase+3); ctx.lineTo(bx_-35, torsoBase+1); ctx.stroke();
+      /* Shoes */
+      ctx.fillStyle = SHOE;
+      ctx.beginPath(); ctx.ellipse(bx_-44, torsoBase+2, 10, 5, -0.2, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(bx_-38, torsoBase+3, 10, 5, -0.15, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#9a7050';
+      ctx.beginPath(); ctx.ellipse(bx_-46, torsoBase, 5, 2.5, -0.2, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(bx_-40, torsoBase+1, 5, 2.5, -0.15, 0, Math.PI*2); ctx.fill();
+
+      /* Torso */
+      ctx.fillStyle = SHIRT_SH; ctx.save(); ctx.translate(bx_, torsoBase); ctx.rotate(-0.07);
+      rr(-15, -46+breathe, 30, 46, 7); ctx.fill(); ctx.restore();
+      ctx.fillStyle = SHIRT; ctx.save(); ctx.translate(bx_, torsoBase); ctx.rotate(-0.07);
+      rr(-13, -44+breathe, 27, 44, 6); ctx.fill(); ctx.restore();
+      ctx.strokeStyle = 'rgba(180,150,100,0.3)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(bx_-1, torsoTop+8+breathe); ctx.lineTo(bx_-1, torsoBase-8); ctx.stroke();
+      /* Neck */
+      ctx.fillStyle = SKIN_SH;
+      ctx.beginPath(); ctx.ellipse(bx_-1, torsoTop+4, 7, 4, -0.1, 0, Math.PI*2); ctx.fill();
+
+      /* Right arm (resting back) */
+      ctx.strokeStyle = SHIRT_SH; ctx.lineWidth = 11;
+      ctx.beginPath(); ctx.moveTo(bx_+11, torsoTop+9+breathe); ctx.quadraticCurveTo(bx_+24, torsoBase-8, bx_+20, torsoBase-1); ctx.stroke();
+      ctx.strokeStyle = SHIRT; ctx.lineWidth = 10;
+      ctx.beginPath(); ctx.moveTo(bx_+11, torsoTop+9+breathe); ctx.quadraticCurveTo(bx_+23, torsoBase-9, bx_+19, torsoBase-2); ctx.stroke();
+      ctx.lineWidth = 9;
+      ctx.beginPath(); ctx.moveTo(bx_+19, torsoBase-2); ctx.lineTo(bx_+36, torsoBase-4); ctx.stroke();
+      ctx.fillStyle = SKIN; ctx.beginPath(); ctx.arc(bx_+36, torsoBase-4, 6, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = SKIN_SH; ctx.beginPath(); ctx.arc(bx_+33, torsoBase-3, 3, 0, Math.PI*2); ctx.fill();
+
+      /* Left arm (throwing) — animated during throw, reaches for catch on seg 3 */
+      var tf = 0;
+      var catchReach = 0;
+      if (throwing) {
+        tf = Math.sin((throwTick / 20) * Math.PI);  /* throw swing */
+      } else if (seg === 3) {
+        catchReach = Math.min(1, t * 2);  /* arm extends forward to catch */
+      }
+      ctx.save();
+      ctx.translate(bx_-11, torsoTop+9+breathe);
+      ctx.rotate(-0.38 - tf*0.85 - catchReach*0.5);
+      ctx.strokeStyle = SHIRT_SH; ctx.lineWidth = 11;
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-21,13); ctx.stroke();
+      ctx.strokeStyle = SHIRT; ctx.lineWidth = 10;
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-20,12); ctx.stroke();
+      ctx.save(); ctx.translate(-20, 12); ctx.rotate(-0.25 - tf*0.5 - catchReach*0.3);
+      ctx.lineWidth = 9;
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.lineTo(-17,9); ctx.stroke();
+      ctx.fillStyle = SKIN; ctx.beginPath(); ctx.arc(-17, 9, 6, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = SKIN_SH; ctx.beginPath(); ctx.arc(-14, 8, 3, 0, Math.PI*2); ctx.fill();
+      /* Draw ball in hand when idle (seg === -1) or at very start of throw */
+      if (seg === -1 || (seg === 0 && t < 0.12)) {
+        ctx.fillStyle = BALL_C;
+        ctx.beginPath(); ctx.arc(-17, 9, BALL_R, 0, Math.PI*2); ctx.fill();
+        ctx.fillStyle = BALL_LT;
+        ctx.beginPath(); ctx.arc(-18.5, 7.5, BALL_R*0.28, 0, Math.PI*2); ctx.fill();
+      }
+      ctx.restore(); ctx.restore();
+
+      /* Head */
+      ctx.fillStyle = SKIN_SH;
+      ctx.beginPath(); ctx.ellipse(bx_-2, torsoTop+3, 6, 9, -0.05, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = SKIN;
+      ctx.beginPath(); ctx.ellipse(bx_-2, torsoTop+2, 5, 7, -0.05, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(bx_-4, headCy, 15, 17, -0.04, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = SKIN_SH;
+      ctx.beginPath(); ctx.ellipse(bx_-7, headCy+11, 9, 5, 0.08, 0, Math.PI); ctx.fill();
+      /* Blush */
+      ctx.save(); ctx.globalAlpha = 0.17; ctx.fillStyle = '#e07060';
+      ctx.beginPath(); ctx.ellipse(bx_-13, headCy+3, 5, 3.5, 0.2, 0, Math.PI*2); ctx.fill(); ctx.restore();
+
+      /* Hair */
+      ctx.fillStyle = HAIR;
+      ctx.beginPath(); ctx.ellipse(bx_-3, headCy-9, 15, 11, -0.04, Math.PI, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.ellipse(bx_+8, headCy-3, 8, 12, 0.45, Math.PI*1.15, Math.PI*2.1); ctx.fill();
+      ctx.beginPath(); ctx.arc(bx_-11, headCy-7, 7, Math.PI*.75, Math.PI*1.75); ctx.fill();
+
+      /* Ear */
+      ctx.fillStyle = SKIN_SH; ctx.beginPath(); ctx.ellipse(bx_-18, headCy+2, 3.8, 5.5, 0.12, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = SKIN; ctx.beginPath(); ctx.ellipse(bx_-18, headCy+2, 2.4, 3.8, 0.12, 0, Math.PI*2); ctx.fill();
+
+      /* Eye */
+      ctx.fillStyle = '#f5efe6'; ctx.beginPath(); ctx.ellipse(bx_-11, headCy-2, 4, 3.2, 0.08, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#3d2510'; ctx.beginPath(); ctx.ellipse(bx_-11.5, headCy-2, 2.8, 2.8, 0, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = HAIR; ctx.beginPath(); ctx.arc(bx_-11.5, headCy-2, 1.6, 0, Math.PI*2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(bx_-10.5, headCy-3, 0.9, 0, Math.PI*2); ctx.fill();
+      ctx.strokeStyle = HAIR; ctx.lineWidth = 1.5; ctx.lineCap = 'round';
+      ctx.beginPath(); ctx.moveTo(bx_-16, headCy-2); ctx.quadraticCurveTo(bx_-11, headCy-5.5, bx_-7, headCy-2.5); ctx.stroke();
+      /* Eyebrow */
+      ctx.strokeStyle = HAIR; ctx.lineWidth = 1.6;
+      ctx.beginPath(); ctx.moveTo(bx_-16, headCy-7); ctx.quadraticCurveTo(bx_-11, headCy-9.5, bx_-7, headCy-8); ctx.stroke();
+      /* Nose */
+      ctx.strokeStyle = SKIN_SH; ctx.lineWidth = 1.3;
+      ctx.beginPath(); ctx.moveTo(bx_-16, headCy); ctx.quadraticCurveTo(bx_-20, headCy+3, bx_-17, headCy+6); ctx.stroke();
+      ctx.fillStyle = SKIN_SH; ctx.beginPath(); ctx.arc(bx_-17, headCy+6, 1.2, 0, Math.PI*2); ctx.fill();
+      /* Mouth */
+      var sm = (seg === -1) ? (0.5 + Math.sin(tick*.018)*0.3) : 0.1;
+      ctx.strokeStyle = SKIN_SH; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.moveTo(bx_-15, headCy+8); ctx.quadraticCurveTo(bx_-12, headCy+8.5+sm, bx_-9, headCy+8); ctx.stroke();
+      ctx.restore(); /* end SCALE transform */
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      drawScene();
+      drawDust();
+      drawBall();
+      drawBoy();
+    }
+
+    function loop() { update(); draw(); raf = requestAnimationFrame(loop); }
+
+    function setup() {
+      canvas = document.getElementById('scene-canvas');
+      if (!canvas) return;
+      ctx = canvas.getContext('2d');
+      resize();
+      if (raf) cancelAnimationFrame(raf);
+      loop();
+    }
+
+    window.startScene = function() { setup(); };
+
+    window.addEventListener('resize', function() {
+      if (document.getElementById('home').classList.contains('active')) resize();
+    });
+
+    new MutationObserver(function() {
+      var active = document.getElementById('home').classList.contains('active');
+      if (active && !raf) setup();
+      else if (!active && raf) { cancelAnimationFrame(raf); raf = null; }
+    }).observe(document.getElementById('home'), { attributes:true, attributeFilter:['class'] });
+
+  })(); /* end animation IIFE */
+
+  /* ── Intro animation ── */
+  var overlay   = document.getElementById('intro-overlay');
+  var introName = document.getElementById('intro-name');
+  var siteTitle = document.querySelector('.site-title');
+
+  document.fonts.ready.then(function(){
+    var chars = [];
+    function addChars(str, italic) {
+      var wrap = italic ? document.createElement('em') : null;
+      var dest = wrap || introName;
+      for (var i=0; i<str.length; i++) {
+        if (str[i] === ' ') {
+          var sp = document.createElement('span'); sp.className='is'; dest.appendChild(sp);
+        } else {
+          var s = document.createElement('span'); s.className='ic'; s.textContent=str[i]; chars.push(s); dest.appendChild(s);
+        }
+      }
+      if (wrap) introName.appendChild(wrap);
+    }
+    addChars('Mayur', false);
+    addChars(' ', false);
+    addChars('Chhoriya', true);
+
+    introName.style.left = Math.round((window.innerWidth  - introName.offsetWidth)  / 2) + 'px';
+    introName.style.top  = Math.round((window.innerHeight - introName.offsetHeight) / 2) + 'px';
+
+    var n = chars.length, step = 75;
+    chars.forEach(function(c,i){ setTimeout(function(){ c.style.opacity='1'; }, 300+i*step); });
+
+    var t2 = 300 + n*step + 300;
+    setTimeout(function(){ introName.style.transition='color 0.7s ease'; introName.style.color=CRIMSON; }, t2);
+
+    var t3 = t2 + 900;
+    setTimeout(function(){
+      window.scrollTo(0, 0);
+      var tr = siteTitle.getBoundingClientRect();
+      introName.style.transition = 'left 0.85s cubic-bezier(0.76,0,0.24,1),top 0.85s cubic-bezier(0.76,0,0.24,1)';
+      introName.style.left = Math.round(tr.left) + 'px';
+      introName.style.top  = Math.round(tr.top)  + 'px';
+    }, t3);
+
+    var t4 = t3 + 900;
+    setTimeout(function(){
+      siteTitle.style.color = CRIMSON;
+      siteTitle.style.visibility = 'visible';
+      var navHome = document.getElementById('nav-home');
+      if (navHome) navHome.classList.add('active');
+      var homeEl = document.getElementById('home');
+      if (homeEl) {
+        homeEl.classList.remove('intro-pre-shown');
+        homeEl.classList.add('active');
+        homeEl.style.setProperty('animation','none','important');
+      }
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        window.scrollTo(0, 0);
+        overlay.style.transition = 'opacity 1.2s ease';
+        overlay.style.opacity = '0';
+        setTimeout(function(){
+          overlay.style.display = 'none';
+          document.documentElement.style.overflow = '';
+          document.body.style.overflow = '';
+          window.scrollTo(0, 0);
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+          if (window.startScene) window.startScene();
+        }, 1300);
+      }); });
+    }, t4);
+  });
+
+})();
+</script>
+</body>
+</html>
